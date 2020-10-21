@@ -1,4 +1,4 @@
-package pack;
+package pack;   // pakiet o nazwie 'pakiet' ?
 
 public class Vector2d {
     public final int x;
@@ -25,8 +25,8 @@ public class Vector2d {
         return false;
     }
 
-    Vector2d upperRight(Vector2d other) {
-        int X, Y;
+    Vector2d upperRight(Vector2d other) {   // Math.max
+        int X, Y;   // zmienne nazywamy camelCasem
         if(this.x>=other.x)
             X=this.x;
         else
