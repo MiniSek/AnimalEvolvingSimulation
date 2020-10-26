@@ -1,4 +1,4 @@
-package pack;
+package lab;
 
 public enum MoveDirection {
     FORWARD,
