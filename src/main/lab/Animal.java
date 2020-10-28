@@ -1,4 +1,4 @@
-package lab;
+package lab; // proszę tu zrobić jakiś pakiet z przynajmniej jedną kropką
 
 public class Animal {
     private MapDirection direction;
@@ -25,7 +25,7 @@ public class Animal {
     //nadpisałem tą metodę to wywołuje właśnie ją, tak samo z this.direction
 
     public void move(MoveDirection direction) {
-        Vector2d rightUpperCorner = new Vector2d(4,4);
+        Vector2d rightUpperCorner = new Vector2d(4,4);  //  warto wydzielić do stałych
         Vector2d leftLowerCorner = new Vector2d(0,0);
         if(direction == MoveDirection.RIGHT) {
             this.direction = this.direction.next();

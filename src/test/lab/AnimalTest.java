@@ -1,6 +1,6 @@
 package lab;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assertions;    // można zastosować import static
 import org.junit.jupiter.api.Test;
 
 public class AnimalTest {
