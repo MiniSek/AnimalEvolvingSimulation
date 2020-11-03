@@ -1,4 +1,4 @@
-package lab;
+package agh.lab;
 
 public enum MoveDirection {
     FORWARD,

@@ -1,4 +1,4 @@
-package lab;
+package agh.lab;
 
 public enum MapDirection {
     NORTH(new Vector2d(0,1)),

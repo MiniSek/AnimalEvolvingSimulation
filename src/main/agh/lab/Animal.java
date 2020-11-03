@@ -1,8 +1,9 @@
-package lab;
+package agh.lab;
 
 public class Animal {
     private MapDirection direction;
     private Vector2d location;
+    private IWorldMap map;
 
     /*
     jak zaimplementować mechanizm, który wyklucza pojawienie się dwóch zwierząt w tym samym miejscu
@@ -11,22 +12,37 @@ public class Animal {
     false - pole wolne
     Jeśli chcę przesunąć zwierzę na nową pozycję sprawdzam czy jest wolna i jeśli tak to przemieszczam je a następnie
     zmieniam wartości odpowiednich pól tablicy taken[][]
+    lub stworzyc klase nadrzedna, ktora te informacje będzie przetrzymywać tak jak jest w laboratorium 4
     */
 
-    public Animal() {
+    public Animal(IWorldMap map) {
         this.direction = MapDirection.NORTH;
         this.location = new Vector2d(2,2);
+        this.map = map;
+    }
+
+    public Animal(IWorldMap map, Vector2d initialPosition) {
+        this.direction = MapDirection.NORTH;
+        this.location = initialPosition;
+        this.map = map;
     }
 
     public String toString() {
-        return this.location.toString() + " " + this.direction.toString();
+        switch (this.direction) {
+            case NORTH:
+                return "^";
+            case EAST:
+                return ">";
+            case SOUTH:
+                return "v";
+            case WEST:
+                return "<";
+            default:
+                return null;
+        }
     }
-    //return this.location; sprawia chyba że z racji zwracania String zachodzi ukryte wywołanie toSting(), a z racji że
-    //nadpisałem tą metodę to wywołuje właśnie ją, tak samo z this.direction
 
     public void move(MoveDirection direction) {
-        Vector2d rightUpperCorner = new Vector2d(4,4);
-        Vector2d leftLowerCorner = new Vector2d(0,0);
         if(direction == MoveDirection.RIGHT) {
             this.direction = this.direction.next();
         }
@@ -35,16 +51,19 @@ public class Animal {
         }
         else if(direction == MoveDirection.FORWARD) {
             Vector2d possibleNewLocation = this.location.add(this.direction.toUnitVector());
-            if(possibleNewLocation.precedes(rightUpperCorner) && possibleNewLocation.follows(leftLowerCorner)) {
+            if(this.map.canMoveTo(possibleNewLocation)) {
                 this.location = possibleNewLocation;
             }
         }
-        else {
+        else if(direction == MoveDirection.BACKWARD) {
             Vector2d possibleNewLocation = this.location.subtract(this.direction.toUnitVector());
-            if(possibleNewLocation.precedes(rightUpperCorner) && possibleNewLocation.follows(leftLowerCorner)) {
+            if(this.map.canMoveTo(possibleNewLocation)) {
                 this.location = possibleNewLocation;
             }
         }
     }
 
+    public Vector2d getPosition() {
+        return this.location;
+    }
 }
