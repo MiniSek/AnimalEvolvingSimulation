@@ -43,25 +43,6 @@ public class RectangularMapTest {
         Assertions.assertEquals(animal, map.objectAt(new Vector2d(0,0)));
     }
 
-    @Test public void getAnimalAtIndexTest() {
-        IWorldMap map = new RectangularMap(10, 5);
-        Animal animal1 = new Animal(map, new Vector2d(5,5));
-        map.place(animal1);
-        Animal animal2 = new Animal(map, new Vector2d(1,3));
-        map.place(animal2);
-        Animal animal3 = new Animal(map, new Vector2d(9,0));
-        map.place(animal3);
-        Assertions.assertEquals(animal1, map.getAnimalAtIndex(0));
-        Assertions.assertEquals(animal3, map.getAnimalAtIndex(2));
-    }
-
-    @Test public void getNumberOfAnimals() {
-        IWorldMap map = new RectangularMap(10, 5);
-        map.place(new Animal(map, new Vector2d(4, 2)));
-        map.place(new Animal(map, new Vector2d(8, 3)));
-        Assertions.assertEquals(2, map.getNumberOfAnimals());
-    }
-
     @Test public void integrationTest() {
         IWorldMap map = new RectangularMap(10, 10);
         Animal animal1 = new Animal(map, new Vector2d(0,0));
@@ -70,20 +51,19 @@ public class RectangularMapTest {
         map.place(animal1);
         map.place(animal2);
         Assertions.assertFalse(map.place(animal3));
-        Assertions.assertEquals(2, map.getNumberOfAnimals());
 
-        map.getAnimalAtIndex(0).move(MoveDirection.LEFT);
-        map.getAnimalAtIndex(0).move(MoveDirection.FORWARD);
-        Assertions.assertEquals(new Vector2d(0,0), map.getAnimalAtIndex(0).getPosition());
-        map.getAnimalAtIndex(0).move(MoveDirection.BACKWARD);
-        map.getAnimalAtIndex(0).move(MoveDirection.RIGHT);
-        map.getAnimalAtIndex(0).move(MoveDirection.FORWARD);
-        map.getAnimalAtIndex(0).move(MoveDirection.FORWARD);
+        animal1.move(MoveDirection.LEFT);
+        animal1.move(MoveDirection.FORWARD);
+        Assertions.assertEquals(new Vector2d(0,0), animal1.getPosition());
+        animal1.move(MoveDirection.BACKWARD);
+        animal1.move(MoveDirection.RIGHT);
+        animal1.move(MoveDirection.FORWARD);
+        animal1.move(MoveDirection.FORWARD);
         Assertions.assertEquals(animal1, map.objectAt(new Vector2d(1,1)));
         Assertions.assertEquals(animal2, map.objectAt(new Vector2d(1,2)));
-        map.getAnimalAtIndex(1).move(MoveDirection.LEFT);
-        map.getAnimalAtIndex(1).move(MoveDirection.LEFT);
-        map.getAnimalAtIndex(1).move(MoveDirection.FORWARD);
+        animal2.move(MoveDirection.LEFT);
+        animal2.move(MoveDirection.LEFT);
+        animal2.move(MoveDirection.FORWARD);
         Assertions.assertEquals(animal1, map.objectAt(new Vector2d(1,1)));
         Assertions.assertEquals(animal2, map.objectAt(new Vector2d(1,2)));
     }

@@ -43,18 +43,6 @@ public class RectangularMap implements IWorldMap {
         return false;
     }
 
-    //vv te dwa gettery przydałoby się wyrzucić do innego interfejsu, by
-    //inne zwierzęta nie miały dostępu do siebie nawzajem
-    //getter potrzebny by dostać się do zwierząt z listy
-    public Animal getAnimalAtIndex(int i) {
-        return animals.get(i);
-    }
-
-    //getter potrzebny by dostać się do rozmiaru listy zwierząt
-    public int getNumberOfAnimals() {
-        return animals.size();
-    }
-
     //zwraca obiekt z danej pozycji, gdy brak obiektu na danej pozycji zwraca nulla
     public Object objectAt(Vector2d position) {
         for(Animal animal: animals){
