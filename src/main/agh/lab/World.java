@@ -1,6 +1,4 @@
 package agh.lab;
-//zrobic testy integracyjne
-import java.util.Scanner;
 
 public class World {
     public static void main(String[] args) {

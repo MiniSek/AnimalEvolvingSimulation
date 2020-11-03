@@ -18,14 +18,14 @@ public class RectangularMap implements IWorldMap {
         return this.visualizer.draw(this.leftLowerCorner, this.rightUpperCorner);
     }
 
-    //sprawdza czy na podana pozycja mozna sie ruszyc tj czy jest wolna i czy nalezy do mapy
+    //Czy komórka position nie jest zajmowana przez inny obiekt i czy nalezy do mapy
     public boolean canMoveTo(Vector2d position) {
         if(!this.isOccupied(position) && position.precedes(this.rightUpperCorner) && position.follows(this.leftLowerCorner))
             return true;
         return false;
     }
 
-    //jesli zwierze moze byc postawione na pozycji na ktorej sie zrespiło to dodaje je do zwierzat i zwraca true, wpw zwraca false
+    //jesli zwierze moze byc ustawione na pozycji na ktorej sie zrespiło to dodaje je do zwierzat i zwraca true, wpw zwraca false
     //tylko do spawnu
     public boolean place(Animal animal) {
         if(!canMoveTo(animal.getPosition()))
@@ -50,7 +50,7 @@ public class RectangularMap implements IWorldMap {
         return animals.get(i);
     }
 
-    //getter potrzebny by dostać się do rozmiaru
+    //getter potrzebny by dostać się do rozmiaru listy zwierząt
     public int getNumberOfAnimals() {
         return animals.size();
     }
