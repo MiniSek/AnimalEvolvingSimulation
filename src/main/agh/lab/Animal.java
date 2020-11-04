@@ -21,7 +21,7 @@ public class Animal {
         this.map = map;
     }
 
-    public Animal(IWorldMap map, Vector2d initialPosition) {
+    public Animal(IWorldMap map, Vector2d initialPosition) {    // DRY
         this.direction = MapDirection.NORTH;
         this.location = initialPosition;
         this.map = map;
