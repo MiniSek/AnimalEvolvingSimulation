@@ -3,8 +3,8 @@ package agh.lab;
 import java.util.ArrayList;
 
 public class SimulationEngine implements IEngine {
-    private final MoveDirection[] directions;
-    private final IWorldMap map;
+    private MoveDirection[] directions;
+    private IWorldMap map;
     private ArrayList<Animal> animals = new ArrayList<>();
 
     public SimulationEngine(MoveDirection[] directions, IWorldMap map, Vector2d[] locations) {
@@ -15,7 +15,6 @@ public class SimulationEngine implements IEngine {
             if(this.map.place(animal)) {
                 this.animals.add(animal);
             }
-
         }
     }
 
@@ -27,6 +26,7 @@ public class SimulationEngine implements IEngine {
             j++;
             if(j>=this.animals.size())
                 j=0;
+            System.out.println(map.toString());
         }
     }
 }

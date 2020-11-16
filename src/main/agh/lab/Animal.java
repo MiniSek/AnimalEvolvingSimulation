@@ -1,8 +1,7 @@
 package agh.lab;
 
-public class Animal {
+public class Animal extends AbstractWorldMapElement {
     private MapDirection direction;
-    private Vector2d location;
     private IWorldMap map;
 
     /*
@@ -16,9 +15,7 @@ public class Animal {
     */
 
     public Animal(IWorldMap map) {
-        this.direction = MapDirection.NORTH;
-        this.location = new Vector2d(2,2);
-        this.map = map;
+        this(map, new Vector2d(2,2));
     }
 
     public Animal(IWorldMap map, Vector2d initialPosition) {
@@ -61,9 +58,5 @@ public class Animal {
                 this.location = possibleNewLocation;
             }
         }
-    }
-
-    public Vector2d getPosition() {
-        return this.location;
     }
 }

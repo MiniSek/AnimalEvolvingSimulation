@@ -19,7 +19,7 @@ public class RectangularMapTest {
     @Test public void placeTest() {
         IWorldMap map = new RectangularMap(10, 5);
         Assertions.assertTrue(map.place(new Animal(map, new Vector2d(0, 1))));
-        Assertions.assertTrue(map.place(new Animal(map, new Vector2d(5, 5))));
+        Assertions.assertTrue(map.place(new Animal(map, new Vector2d(5, 4))));
         Assertions.assertFalse(map.place(new Animal(map, new Vector2d(10, 6))));
         Assertions.assertFalse(map.place(new Animal(map, new Vector2d(0, 1))));
         Assertions.assertFalse(map.place(new Animal(map, new Vector2d(5, 5))));
