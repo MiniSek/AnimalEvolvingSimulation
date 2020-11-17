@@ -15,7 +15,6 @@ public abstract class AbstractWorldMap implements IWorldMap{
         return this.visualizer.draw(this.leftLowerCornerToDraw, this.rightUpperCornerToDraw);
     }
 
-    //zapytać jak to jest z modyfikatorem dostępu w przypadku klas abstrakcyjnych
     protected abstract void setDrawFrame();
 
     public boolean canMoveTo(Vector2d position) {
@@ -29,7 +28,7 @@ public abstract class AbstractWorldMap implements IWorldMap{
         return true;
     }
 
-    //true jeżeli jest tam jakikolwiek objekt, wpw false, musi tak być ze względu na klasę mapVisualizer
+    //true jeżeli jest tam jakikolwiek obiekt, wpw false, musi tak być ze względu na klasę mapVisualizer
     //pamiętać: wywołuje metodę objectAt(position) w implementacji typu obiektu na rzecz którego została wywołana
     public boolean isOccupied(Vector2d position) {
         return this.objectAt(position) != null;

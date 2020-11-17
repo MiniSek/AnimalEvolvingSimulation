@@ -1,6 +1,6 @@
 package agh.lab;
 
-public abstract class AbstractWorldMapElement implements IMapElement {
+public abstract class AbstractWorldMapElement {
     protected Vector2d location;
 
     public Vector2d getPosition() {
