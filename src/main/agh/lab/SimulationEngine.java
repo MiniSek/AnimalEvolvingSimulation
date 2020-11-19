@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class SimulationEngine implements IEngine {
     private MoveDirection[] directions;
     private IWorldMap map;
-    private ArrayList<Animal> animals = new ArrayList<>();
+    private ArrayList<Animal> animals = new ArrayList<>();  // to pole może być finalne
 
     public SimulationEngine(MoveDirection[] directions, IWorldMap map, Vector2d[] locations) {
         this.directions = directions;

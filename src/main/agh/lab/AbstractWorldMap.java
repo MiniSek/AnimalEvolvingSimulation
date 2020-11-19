@@ -3,19 +3,19 @@ package agh.lab;
 import java.util.ArrayList;
 
 public abstract class AbstractWorldMap implements IWorldMap{
-    protected MapVisualizer visualizer;
-    protected Vector2d leftLowerCorner;
+    protected MapVisualizer visualizer; // to pole może być finalne i prywatne
+    protected Vector2d leftLowerCorner; // czy to jest wspólna funkcjonalność obu map?
     protected Vector2d rightUpperCorner;
     protected Vector2d leftLowerCornerToDraw;
     protected Vector2d rightUpperCornerToDraw;
-    protected ArrayList<Animal> animals = new ArrayList<>();
+    protected ArrayList<Animal> animals = new ArrayList<>();    // to pole może być finalne
 
     public String toString() {
         this.setDrawFrame();
         return this.visualizer.draw(this.leftLowerCornerToDraw, this.rightUpperCornerToDraw);
     }
 
-    protected abstract void setDrawFrame();
+    protected abstract void setDrawFrame(); // proponuję raczej update niż set; set sugeruje, że przyjmuje parametr
 
     public boolean canMoveTo(Vector2d position) {
         return (!this.isOccupied(position) && position.precedes(this.rightUpperCorner) && position.follows(this.leftLowerCorner));

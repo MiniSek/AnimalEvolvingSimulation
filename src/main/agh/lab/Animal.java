@@ -2,7 +2,7 @@ package agh.lab;
 
 public class Animal extends AbstractWorldMapElement {
     private MapDirection direction;
-    private IWorldMap map;
+    private IWorldMap map;  // to pole może być finalne
 
     /*
     jak zaimplementować mechanizm, który wyklucza pojawienie się dwóch zwierząt w tym samym miejscu
