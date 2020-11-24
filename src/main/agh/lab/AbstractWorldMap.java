@@ -1,21 +1,31 @@
 package agh.lab;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public abstract class AbstractWorldMap implements IWorldMap{
-    protected MapVisualizer visualizer;
-    protected Vector2d leftLowerCorner;
+public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver{
+    private final MapVisualizer visualizer; // modyfikator prywatny działa chyba tak, że każdy obiekt klasy dziedziczącej
+    // nie ma swojego visualizera tylko korzysta z prywatnego tej klasy, bo też tylko toString w tej klasie korzysta z tego pola
+    protected Vector2d leftLowerCorner; // czy to jest wspólna funkcjonalność obu map? według mnie tak
     protected Vector2d rightUpperCorner;
     protected Vector2d leftLowerCornerToDraw;
     protected Vector2d rightUpperCornerToDraw;
-    protected ArrayList<Animal> animals = new ArrayList<>();
+    protected final Map<Vector2d, Animal> animals = new LinkedHashMap<>();
+
+    protected AbstractWorldMap() {
+        this.visualizer = new MapVisualizer(this);
+        this.leftLowerCorner = new Vector2d(0,0);
+        this.rightUpperCorner = new Vector2d(0,0);
+        this.leftLowerCornerToDraw = new Vector2d(0,0);
+        this.rightUpperCornerToDraw = new Vector2d(0,0);
+    }
 
     public String toString() {
-        this.setDrawFrame();
+        this.updateDrawFrame();
         return this.visualizer.draw(this.leftLowerCornerToDraw, this.rightUpperCornerToDraw);
     }
 
-    protected abstract void setDrawFrame();
+    protected abstract void updateDrawFrame();
 
     public boolean canMoveTo(Vector2d position) {
         return (!this.isOccupied(position) && position.precedes(this.rightUpperCorner) && position.follows(this.leftLowerCorner));
@@ -24,7 +34,7 @@ public abstract class AbstractWorldMap implements IWorldMap{
     public boolean place(Animal animal) {
         if(!this.canMoveTo(animal.getPosition()))
             return false;
-        this.animals.add(animal);
+        this.animals.put(animal.getPosition(), animal);
         return true;
     }
 
@@ -35,10 +45,14 @@ public abstract class AbstractWorldMap implements IWorldMap{
     }
 
     public Object objectAt(Vector2d position) {
-        for(Animal animal: animals){
-            if(position.equals(animal.getPosition()))
-                return animal;
+        return this.animals.get(position);
+    }
+
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+        Animal animalToRelocate = this.animals.get(oldPosition);
+        if(animalToRelocate.getPosition().equals(newPosition)) {
+            this.animals.remove(oldPosition);
+            this.animals.put(newPosition, animalToRelocate);
         }
-        return null;
     }
 }

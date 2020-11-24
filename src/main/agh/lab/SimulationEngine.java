@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class SimulationEngine implements IEngine {
     private MoveDirection[] directions;
     private IWorldMap map;
-    private ArrayList<Animal> animals = new ArrayList<>();
+    private final ArrayList<Animal> animals = new ArrayList<>();
 
     public SimulationEngine(MoveDirection[] directions, IWorldMap map, Vector2d[] locations) {
         this.directions = directions;
@@ -13,12 +13,12 @@ public class SimulationEngine implements IEngine {
         for(Vector2d vector : locations) {
             Animal animal = new Animal(map, vector);
             if(this.map.place(animal)) {
+                animal.addObserver((IPositionChangeObserver)this.map);
                 this.animals.add(animal);
             }
         }
     }
 
-    //wykonuje serie ruchow dla wszystkich zwierzat na mapie
     public void run(){
         int j=0;
         for(int i=0; i<this.directions.length; i++) {

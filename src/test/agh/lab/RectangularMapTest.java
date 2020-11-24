@@ -49,7 +49,9 @@ public class RectangularMapTest {
         Animal animal2 = new Animal(map, new Vector2d(1,2));
         Animal animal3 = new Animal(map, new Vector2d(1,2));
         map.place(animal1);
+        animal1.addObserver((IPositionChangeObserver)map);
         map.place(animal2);
+        animal2.addObserver((IPositionChangeObserver)map);
         Assertions.assertFalse(map.place(animal3));
 
         animal1.move(MoveDirection.LEFT);

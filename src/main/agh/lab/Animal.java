@@ -1,18 +1,11 @@
 package agh.lab;
 
+import java.util.ArrayList;
+
 public class Animal extends AbstractWorldMapElement {
     private MapDirection direction;
-    private IWorldMap map;
-
-    /*
-    jak zaimplementować mechanizm, który wyklucza pojawienie się dwóch zwierząt w tym samym miejscu
-    Należy stworzyć tablicę z modyfikatorem: private static boolean taken[5][5], tablica ta będzie wspólna dla wszystkich obiektów
-    true - pole zajęte
-    false - pole wolne
-    Jeśli chcę przesunąć zwierzę na nową pozycję sprawdzam czy jest wolna i jeśli tak to przemieszczam je a następnie
-    zmieniam wartości odpowiednich pól tablicy taken[][]
-    lub stworzyc klase nadrzedna, ktora te informacje będzie przetrzymywać tak jak jest w laboratorium 4
-    */
+    private final IWorldMap map;
+    private ArrayList<IPositionChangeObserver> observers = new ArrayList<>();
 
     public Animal(IWorldMap map) {
         this(map, new Vector2d(2,2));
@@ -46,17 +39,35 @@ public class Animal extends AbstractWorldMapElement {
         else if(direction == MoveDirection.LEFT) {
             this.direction = this.direction.previous();
         }
-        else if(direction == MoveDirection.FORWARD) {
-            Vector2d possibleNewLocation = this.location.add(this.direction.toUnitVector());
+        else if(direction == MoveDirection.FORWARD || direction == MoveDirection.BACKWARD) {
+            Vector2d possibleNewLocation;
+            if(direction == MoveDirection.FORWARD) {
+                possibleNewLocation = this.location.add(this.direction.toUnitVector());
+            }
+            else {
+                possibleNewLocation = this.location.subtract(this.direction.toUnitVector());
+            }
+
             if(this.map.canMoveTo(possibleNewLocation)) {
+                Vector2d oldLocation = this.location;
                 this.location = possibleNewLocation;
+                this.positionChanged(oldLocation, this.location);
             }
         }
-        else if(direction == MoveDirection.BACKWARD) {
-            Vector2d possibleNewLocation = this.location.subtract(this.direction.toUnitVector());
-            if(this.map.canMoveTo(possibleNewLocation)) {
-                this.location = possibleNewLocation;
-            }
-        }
+    }
+
+    public void addObserver(IPositionChangeObserver observer) {
+        this.observers.add(observer);
+    }
+
+    public void removeObserver(IPositionChangeObserver observer) {
+        for(IPositionChangeObserver observerFromList : this.observers)
+            if(observerFromList.equals(observer))
+                this.observers.remove(observer);
+    }
+
+    private void positionChanged(Vector2d oldLocation, Vector2d newLocation) {
+        for(IPositionChangeObserver observerFromList : this.observers)
+            observerFromList.positionChanged(oldLocation, newLocation);
     }
 }
