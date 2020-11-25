@@ -6,7 +6,7 @@ import java.util.Map;
 public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver{
     private final MapVisualizer visualizer; // modyfikator prywatny działa chyba tak, że każdy obiekt klasy dziedziczącej
     // nie ma swojego visualizera tylko korzysta z prywatnego tej klasy, bo też tylko toString w tej klasie korzysta z tego pola
-    protected Vector2d leftLowerCorner; // czy to jest wspólna funkcjonalność obu map? według mnie tak
+    protected Vector2d leftLowerCorner; // czy to jest wspólna funkcjonalność obu map? według mnie tak  moim zdaniem to bardziej zaciemnia, niż pomaga
     protected Vector2d rightUpperCorner;
     protected Vector2d leftLowerCornerToDraw;
     protected Vector2d rightUpperCornerToDraw;

@@ -65,7 +65,7 @@ public class GrassField extends AbstractWorldMap {
 
     //wynik zwracany przez metodę isOccupied(position) wymusza konieczność takiego nadpisania
     @Override public boolean canMoveTo(Vector2d position) {
-        return (!(this.objectAt(position) instanceof Animal) && position.precedes(this.rightUpperCorner) && position.follows(this.leftLowerCorner));
+        return (!(this.objectAt(position) instanceof Animal) && position.precedes(this.rightUpperCorner) && position.follows(this.leftLowerCorner));    // czy jest sens sprawdzać, czy int nie jest większy od maksymalnej możliwej wartości int'a?
     }
 
     //jesli jest tam trawa i zwierze, zwraca zwierze

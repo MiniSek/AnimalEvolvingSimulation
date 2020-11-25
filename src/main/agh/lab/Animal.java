@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Animal extends AbstractWorldMapElement {
     private MapDirection direction;
     private final IWorldMap map;
-    private ArrayList<IPositionChangeObserver> observers = new ArrayList<>();
+    private ArrayList<IPositionChangeObserver> observers = new ArrayList<>();   // to pole może być finalne
 
     public Animal(IWorldMap map) {
         this(map, new Vector2d(2,2));

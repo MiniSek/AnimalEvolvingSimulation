@@ -13,7 +13,7 @@ public class SimulationEngine implements IEngine {
         for(Vector2d vector : locations) {
             Animal animal = new Animal(map, vector);
             if(this.map.place(animal)) {
-                animal.addObserver((IPositionChangeObserver)this.map);
+                animal.addObserver((IPositionChangeObserver)this.map);  // mapa sama się powinna zatroszczyć o siebie
                 this.animals.add(animal);
             }
         }

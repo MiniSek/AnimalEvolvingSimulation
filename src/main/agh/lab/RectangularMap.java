@@ -9,7 +9,7 @@ public class RectangularMap extends AbstractWorldMap{
 
     //implementacja metody abstrakcyjnej
     public void updateDrawFrame() {
-        this.leftLowerCornerToDraw = this.leftLowerCorner;
+        this.leftLowerCornerToDraw = this.leftLowerCorner;  // nie lepiej zrobić to raz w konstruktorze, a w tej metodzie zostawić tylko komentarz?
         this.rightUpperCornerToDraw = this.rightUpperCorner;
     }
 }
