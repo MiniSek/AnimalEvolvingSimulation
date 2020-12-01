@@ -1,6 +1,5 @@
 package agh.lab;
 
-import agh.lab.MapDirection;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,5 @@
 package agh.lab;
 
-import agh.lab.Vector2d;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

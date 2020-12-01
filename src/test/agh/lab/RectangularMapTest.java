@@ -20,14 +20,21 @@ public class RectangularMapTest {
         IWorldMap map = new RectangularMap(10, 5);
         Assertions.assertTrue(map.place(new Animal(map, new Vector2d(0, 1))));
         Assertions.assertTrue(map.place(new Animal(map, new Vector2d(5, 4))));
-        Assertions.assertFalse(map.place(new Animal(map, new Vector2d(10, 6))));
-        Assertions.assertFalse(map.place(new Animal(map, new Vector2d(0, 1))));
-        Assertions.assertFalse(map.place(new Animal(map, new Vector2d(5, 5))));
+        IllegalArgumentException e;
+        e = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> { map.place(new Animal(map, new Vector2d(10, 6)));});
+        Assertions.assertEquals("animal cannot be added at position (10,6)", e.getMessage());
+        e = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> { map.place(new Animal(map, new Vector2d(0, 1)));});
+        Assertions.assertEquals("animal cannot be added at position (0,1)", e.getMessage());
+        e = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> { map.place(new Animal(map, new Vector2d(5, 5)));});
+        Assertions.assertEquals("animal cannot be added at position (5,5)", e.getMessage());
     }
 
     @Test public void canMoveToTest() {
         IWorldMap map = new RectangularMap(10, 5);
-        map.place(new Animal(map, new Vector2d(2, 5)));
+        map.place(new Animal(map, new Vector2d(2, 4)));
         map.place(new Animal(map, new Vector2d(8, 2)));
         Assertions.assertTrue(map.canMoveTo(new Vector2d(0,0)));
         Assertions.assertFalse(map.canMoveTo(new Vector2d(2,5)));
@@ -49,10 +56,11 @@ public class RectangularMapTest {
         Animal animal2 = new Animal(map, new Vector2d(1,2));
         Animal animal3 = new Animal(map, new Vector2d(1,2));
         map.place(animal1);
-        animal1.addObserver((IPositionChangeObserver)map);
         map.place(animal2);
-        animal2.addObserver((IPositionChangeObserver)map);
-        Assertions.assertFalse(map.place(animal3));
+
+        IllegalArgumentException e = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> { map.place(animal3);});
+        Assertions.assertEquals("animal cannot be added at position (1,2)", e.getMessage());
 
         animal1.move(MoveDirection.LEFT);
         animal1.move(MoveDirection.FORWARD);

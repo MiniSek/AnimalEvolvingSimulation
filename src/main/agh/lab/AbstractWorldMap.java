@@ -6,16 +6,14 @@ import java.util.Map;
 public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver{
     private final MapVisualizer visualizer; // modyfikator prywatny działa chyba tak, że każdy obiekt klasy dziedziczącej
     // nie ma swojego visualizera tylko korzysta z prywatnego tej klasy, bo też tylko toString w tej klasie korzysta z tego pola
-    protected Vector2d leftLowerCorner; // czy to jest wspólna funkcjonalność obu map? według mnie tak
-    protected Vector2d rightUpperCorner;
     protected Vector2d leftLowerCornerToDraw;
     protected Vector2d rightUpperCornerToDraw;
     protected final Map<Vector2d, Animal> animals = new LinkedHashMap<>();
+    protected MapBoundary mapBoundary;
 
     protected AbstractWorldMap() {
         this.visualizer = new MapVisualizer(this);
-        this.leftLowerCorner = new Vector2d(0,0);
-        this.rightUpperCorner = new Vector2d(0,0);
+        this.mapBoundary = new MapBoundary();
         this.leftLowerCornerToDraw = new Vector2d(0,0);
         this.rightUpperCornerToDraw = new Vector2d(0,0);
     }
@@ -28,13 +26,16 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     protected abstract void updateDrawFrame();
 
     public boolean canMoveTo(Vector2d position) {
-        return (!this.isOccupied(position) && position.precedes(this.rightUpperCorner) && position.follows(this.leftLowerCorner));
+        return !(this.objectAt(position) instanceof Animal);
     }
 
-    public boolean place(Animal animal) {
+    public boolean place(Animal animal) throws IllegalArgumentException {
         if(!this.canMoveTo(animal.getPosition()))
-            return false;
+            throw new IllegalArgumentException("animal cannot be added at position " + animal.getPosition());
+        animal.addObserver((IPositionChangeObserver)this);
+        animal.addObserver((IPositionChangeObserver)this.mapBoundary);
         this.animals.put(animal.getPosition(), animal);
+        this.mapBoundary.addObjectToMapBoundary(animal);
         return true;
     }
 

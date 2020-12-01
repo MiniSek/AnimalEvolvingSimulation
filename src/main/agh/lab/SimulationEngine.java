@@ -7,13 +7,12 @@ public class SimulationEngine implements IEngine {
     private IWorldMap map;
     private final ArrayList<Animal> animals = new ArrayList<>();
 
-    public SimulationEngine(MoveDirection[] directions, IWorldMap map, Vector2d[] locations) {
+    public SimulationEngine(MoveDirection[] directions, IWorldMap map, Vector2d[] locations) throws IllegalArgumentException {
         this.directions = directions;
         this.map = map;
         for(Vector2d vector : locations) {
             Animal animal = new Animal(map, vector);
             if(this.map.place(animal)) {
-                animal.addObserver((IPositionChangeObserver)this.map);
                 this.animals.add(animal);
             }
         }

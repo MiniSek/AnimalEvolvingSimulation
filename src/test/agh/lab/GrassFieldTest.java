@@ -36,7 +36,8 @@ public class GrassFieldTest {
         Animal animal1 = new Animal(map, new Vector2d(8, 2));
         Animal animal2 = new Animal(map, new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE));
         Assertions.assertTrue(map.place(animal1));
-        Assertions.assertFalse(map.place(animal1));
+        IllegalArgumentException e = Assertions.assertThrows(IllegalArgumentException.class, () -> { map.place(animal1);});
+        Assertions.assertEquals("animal cannot be added at position (8,2)", e.getMessage());
         Assertions.assertTrue(map.place(animal2));
     }
 }

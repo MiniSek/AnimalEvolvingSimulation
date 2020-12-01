@@ -74,6 +74,12 @@ public class Vector2d {
         return new Vector2d(-this.x, -this.y);
     }
 
+    public int getCoordinate(int numberOfCoordinate) {
+        if(numberOfCoordinate == 1)
+            return this.x;
+        return this.y;
+    }
+
     @Override public int hashCode() {
         int hash = 11;
         hash = 103 * hash + this.x;

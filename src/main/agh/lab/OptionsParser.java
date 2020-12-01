@@ -1,7 +1,7 @@
 package agh.lab;
 
 public class OptionsParser {
-    public MoveDirection[] parse(String[] rawMoves) {
+    public MoveDirection[] parse(String[] rawMoves) throws IllegalArgumentException{
         int j=0;
         for(String rawMove : rawMoves) {
             if(rawMove.equals("f") || rawMove.equals("forward") || rawMove.equals("b") ||
@@ -9,6 +9,8 @@ public class OptionsParser {
                     rawMove.equals("l") || rawMove.equals("left")) {
                j++;
             }
+            else
+                throw new IllegalArgumentException("'" + rawMove + "' is not legal move specification");
         }
 
         MoveDirection[] convertedMoves = new MoveDirection[j];
