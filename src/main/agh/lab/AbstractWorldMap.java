@@ -9,7 +9,7 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     protected Vector2d leftLowerCornerToDraw;
     protected Vector2d rightUpperCornerToDraw;
     protected final Map<Vector2d, Animal> animals = new LinkedHashMap<>();
-    protected MapBoundary mapBoundary;
+    protected MapBoundary mapBoundary;  // czy to jest wspólne dla obu map?
 
     protected AbstractWorldMap() {
         this.visualizer = new MapVisualizer(this);
@@ -32,8 +32,8 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     public boolean place(Animal animal) throws IllegalArgumentException {
         if(!this.canMoveTo(animal.getPosition()))
             throw new IllegalArgumentException("animal cannot be added at position " + animal.getPosition());
-        animal.addObserver((IPositionChangeObserver)this);
-        animal.addObserver((IPositionChangeObserver)this.mapBoundary);
+        animal.addObserver((IPositionChangeObserver)this); // czy to rzutowanie jest potrzebne?
+        animal.addObserver((IPositionChangeObserver)this.mapBoundary);  // niech Boundary wyjdzie z inicjatywą
         this.animals.put(animal.getPosition(), animal);
         this.mapBoundary.addObjectToMapBoundary(animal);
         return true;

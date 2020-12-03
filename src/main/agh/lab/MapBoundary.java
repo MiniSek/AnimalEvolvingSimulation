@@ -26,7 +26,7 @@ public class MapBoundary implements IPositionChangeObserver {
         if(object instanceof Animal)
             this.addToSortedLists(((Animal)object).getPosition(), true);
         else if(object instanceof Grass)
-            this.addToSortedLists(((Grass)object).getPosition(), true);
+            this.addToSortedLists(((Grass)object).getPosition(), true); // true?
         else
             throw new IllegalArgumentException("this type of object cannot be added to MapBoundary class");
     }
@@ -58,7 +58,7 @@ public class MapBoundary implements IPositionChangeObserver {
 
     //finding index in list sorted by numberOfCoordinate to add object
     //or position of the object in this list if it is in the list already
-    private int binarySearch(ArrayList<ObjectOnMap> sortedObjects, int numberOfCoordinate, int l, int r, ObjectOnMap object) {
+    private int binarySearch(ArrayList<ObjectOnMap> sortedObjects, int numberOfCoordinate, int l, int r, ObjectOnMap object) {  // gdyby Pan skorzystał z SortedSet'u to ta metoda by nie była potrzebna
         if(l<=r) {
             int mid = l+(r-l)/2;
             if(sortedObjects.get(mid).position.equals(object.position)) {

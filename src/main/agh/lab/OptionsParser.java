@@ -3,7 +3,7 @@ package agh.lab;
 public class OptionsParser {
     public MoveDirection[] parse(String[] rawMoves) throws IllegalArgumentException{
         int j=0;
-        for(String rawMove : rawMoves) {
+        for(String rawMove : rawMoves) {    // czy jest potrzeba na zapas sprawdzać poprawność kierunków?
             if(rawMove.equals("f") || rawMove.equals("forward") || rawMove.equals("b") ||
                     rawMove.equals("backward") || rawMove.equals("r") || rawMove.equals("right") ||
                     rawMove.equals("l") || rawMove.equals("left")) {
