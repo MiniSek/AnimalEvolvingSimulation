@@ -1,4 +1,4 @@
-package agh.lab;
+package evolution;
 
 public class MapVisualizer {
     private static final String EMPTY_CELL = " ";

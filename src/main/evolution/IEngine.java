@@ -1,4 +1,4 @@
-package agh.lab;
+package evolution;
 
 public interface IEngine {
     void run();

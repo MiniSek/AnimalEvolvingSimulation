@@ -1,4 +1,4 @@
-package agh.lab;
+package evolution;
 
 public class Vector2d {
     public final int x;
