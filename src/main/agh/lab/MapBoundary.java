@@ -1,9 +1,12 @@
 package agh.lab;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class MapBoundary implements IPositionChangeObserver {
-    private class ObjectOnMap {
+    private class ObjectOnMap { //implements Comparable<ObjectOnMap> {
         public final Vector2d position;
         public final boolean isAnimal;
 
@@ -11,6 +14,14 @@ public class MapBoundary implements IPositionChangeObserver {
             this.position = position;
             this.isAnimal = isAnimal;
         }
+
+//        public int compareTo(ObjectOnMap other) {
+//            if(this.position.x > other.position.x || (this.position.x == other.position.x && this.position.y > other.position.y) ||
+//                    (this.position.x == other.position.x && this.position.y == other.position.y && this.isAnimal))
+//                return 1;
+//            else
+//                return -1;
+//        }
     }
 
     private final ArrayList<ObjectOnMap> xSortedObjects = new ArrayList<>();
@@ -23,10 +34,12 @@ public class MapBoundary implements IPositionChangeObserver {
 
     //to add object of type Object to lists from outside of this class
     public void addObjectToMapBoundary(Object object) throws IllegalArgumentException{
-        if(object instanceof Animal)
+        if(object instanceof Animal) {
+            ((Animal)object).addObserver(this);
             this.addToSortedLists(((Animal)object).getPosition(), true);
+        }
         else if(object instanceof Grass)
-            this.addToSortedLists(((Grass)object).getPosition(), true);
+            this.addToSortedLists(((Grass)object).getPosition(), false);
         else
             throw new IllegalArgumentException("this type of object cannot be added to MapBoundary class");
     }
@@ -51,7 +64,6 @@ public class MapBoundary implements IPositionChangeObserver {
             this.xSortedObjects.remove(index);
             index = this.binarySearch(this.ySortedObjects, 2, 0, this.numberOfObjects, new ObjectOnMap(oldPosition, true));
             this.ySortedObjects.remove(index);
-
             this.numberOfObjects -= 1;
             this.addToSortedLists(newPosition, true);
     }

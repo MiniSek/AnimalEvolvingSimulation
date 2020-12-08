@@ -9,11 +9,9 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     protected Vector2d leftLowerCornerToDraw;
     protected Vector2d rightUpperCornerToDraw;
     protected final Map<Vector2d, Animal> animals = new LinkedHashMap<>();
-    protected MapBoundary mapBoundary;
 
     protected AbstractWorldMap() {
         this.visualizer = new MapVisualizer(this);
-        this.mapBoundary = new MapBoundary();
         this.leftLowerCornerToDraw = new Vector2d(0,0);
         this.rightUpperCornerToDraw = new Vector2d(0,0);
     }
@@ -32,10 +30,8 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     public boolean place(Animal animal) throws IllegalArgumentException {
         if(!this.canMoveTo(animal.getPosition()))
             throw new IllegalArgumentException("animal cannot be added at position " + animal.getPosition());
-        animal.addObserver((IPositionChangeObserver)this);
-        animal.addObserver((IPositionChangeObserver)this.mapBoundary);
+        animal.addObserver(this);
         this.animals.put(animal.getPosition(), animal);
-        this.mapBoundary.addObjectToMapBoundary(animal);
         return true;
     }
 

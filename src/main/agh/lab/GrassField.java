@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class GrassField extends AbstractWorldMap {
+    private MapBoundary mapBoundary;
     private int numberOfGrasses;
     private int lengthOfGrassedSquare;
     private Vector2d leftLowerCornerOfGrasses;
@@ -15,6 +16,7 @@ public class GrassField extends AbstractWorldMap {
         super();
         if(numberOfGrasses < 0)
             throw new IllegalArgumentException("Number of grasses cannot be negative");
+        this.mapBoundary = new MapBoundary();
         this.numberOfGrasses = numberOfGrasses;
         this.lengthOfGrassedSquare = Math.toIntExact(Math.round(Math.sqrt(numberOfGrasses*10)));
         this.leftLowerCornerOfGrasses = new Vector2d(0,0);
@@ -54,6 +56,12 @@ public class GrassField extends AbstractWorldMap {
     public void updateDrawFrame() {
         this.leftLowerCornerToDraw = this.mapBoundary.getLeftLowerCornerToDraw();
         this.rightUpperCornerToDraw = this.mapBoundary.getRightUpperCornerToDraw();
+    }
+
+    @Override public boolean place(Animal animal) throws IllegalArgumentException {
+        if(super.place(animal))
+            this.mapBoundary.addObjectToMapBoundary(animal);
+        return true;
     }
 
     @Override public Object objectAt(Vector2d position) {
