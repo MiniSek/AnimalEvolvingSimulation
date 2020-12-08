@@ -1,4 +1,4 @@
-package agh.lab;
+package evolution;
 
 public abstract class AbstractWorldMapElement {
     protected Vector2d location;
@@ -7,3 +7,4 @@ public abstract class AbstractWorldMapElement {
         return this.location;
     }
 }
+

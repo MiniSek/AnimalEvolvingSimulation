@@ -1,4 +1,4 @@
-package agh.lab;
+package evolution;
 
 public class Grass extends AbstractWorldMapElement{
     public Grass(Vector2d location) {
@@ -9,3 +9,4 @@ public class Grass extends AbstractWorldMapElement{
         return "*";
     }
 }
+

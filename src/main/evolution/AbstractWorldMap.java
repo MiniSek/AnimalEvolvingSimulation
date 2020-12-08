@@ -1,9 +1,9 @@
-package agh.lab;
+package evolution;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObserver{
+public abstract class AbstractWorldMap implements IWorldMap, IAnimalObserver {
     private final MapVisualizer visualizer; // modyfikator prywatny działa chyba tak, że każdy obiekt klasy dziedziczącej
     // nie ma swojego visualizera tylko korzysta z prywatnego tej klasy, bo też tylko toString w tej klasie korzysta z tego pola
     protected Vector2d leftLowerCornerToDraw;
@@ -45,11 +45,11 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         return this.animals.get(position);
     }
 
-    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
-        Animal animalToRelocate = this.animals.get(oldPosition);
-        if(animalToRelocate.getPosition().equals(newPosition)) {
-            this.animals.remove(oldPosition);
-            this.animals.put(newPosition, animalToRelocate);
-        }
-    }
+//    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+//        Animal animalToRelocate = this.animals.get(oldPosition);
+//        if(animalToRelocate.getPosition().equals(newPosition)) {
+//            this.animals.remove(oldPosition);
+//            this.animals.put(newPosition, animalToRelocate);
+//        }
+//    }
 }
