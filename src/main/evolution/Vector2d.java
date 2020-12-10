@@ -70,14 +70,8 @@ public class Vector2d {
         return this.x == that.x && this.y == that.y;
     }
 
-    public Vector2d oppposite() {
+    public Vector2d opposite() {
         return new Vector2d(-this.x, -this.y);
-    }
-
-    public int getCoordinate(int numberOfCoordinate) {
-        if(numberOfCoordinate == 1)
-            return this.x;
-        return this.y;
     }
 
     @Override public int hashCode() {

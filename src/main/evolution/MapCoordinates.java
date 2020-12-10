@@ -20,12 +20,25 @@ public class MapCoordinates {
         this.leftLowerCorner = new Vector2d(0,0);
         this.rightUpperCorner = new Vector2d(width-1, height-1);
 
+        //check if it is good
         this.leftLowerCornerOfJungle = new Vector2d((int)Math.floor((width-1)*(1-jungleRatio)/2),
                 (int)Math.floor((height-1)*(1-jungleRatio)/2));
         this.rightUpperCornerOfJungle = new Vector2d((int)Math.floor((width-1)*(1-jungleRatio)/2+(width-1)*jungleRatio),
                 (int)Math.floor((height-1)*(1-jungleRatio)/2+(height-1)*jungleRatio));
         this.jungleWidth = this.rightUpperCornerOfJungle.x - this.leftLowerCornerOfJungle.x + 1;
         this.jungleHeight =  this.rightUpperCornerOfJungle.y - this.leftLowerCornerOfJungle.y + 1;
+    }
+
+    //done, don't change
+    public Vector2d setCorrespondingPositionIfCurrentIsOutsideOfMap(Vector2d position) {
+        Vector2d positionPrecedingRightUpperCorner = new Vector2d(position.x % (this.rightUpperCorner.x + 1),
+                position.y % (this.rightUpperCorner.y + 1));
+
+        Vector2d positionInMap = new Vector2d((positionPrecedingRightUpperCorner.x + this.rightUpperCorner.x + 1) %
+                (this.rightUpperCorner.x + 1), (positionPrecedingRightUpperCorner.y + this.rightUpperCorner.y + 1) %
+                (this.rightUpperCorner.y + 1));
+
+        return positionInMap;
     }
 
     public boolean isPositionInJungle(Vector2d position) {

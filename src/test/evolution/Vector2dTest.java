@@ -68,7 +68,7 @@ public class Vector2dTest {
 
     @Test public void oppositeTest() {
         Vector2d point = new Vector2d(2,-3);
-        point = point.oppposite();
+        point = point.opposite();
         Assertions.assertEquals(-2,point.x);
         Assertions.assertEquals(3,point.y);
     }

@@ -3,7 +3,7 @@ package evolution;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public abstract class AbstractWorldMap implements IWorldMap, IAnimalObserver {
+public abstract class AbstractWorldMap implements IWorldMap, IAnimalPositionChangedObserver {
     private final MapVisualizer visualizer; // modyfikator prywatny działa chyba tak, że każdy obiekt klasy dziedziczącej
     // nie ma swojego visualizera tylko korzysta z prywatnego tej klasy, bo też tylko toString w tej klasie korzysta z tego pola
     protected Vector2d leftLowerCornerToDraw;
@@ -27,12 +27,11 @@ public abstract class AbstractWorldMap implements IWorldMap, IAnimalObserver {
         return !(this.objectAt(position) instanceof Animal);
     }
 
-    public boolean place(Animal animal) throws IllegalArgumentException {
+    public void place(Animal animal) throws IllegalArgumentException {
         if(!this.canMoveTo(animal.getPosition()))
             throw new IllegalArgumentException("animal cannot be added at position " + animal.getPosition());
         animal.addObserver(this);
         this.animals.put(animal.getPosition(), animal);
-        return true;
     }
 
     //true jeżeli jest tam jakikolwiek obiekt, wpw false, musi tak być ze względu na klasę mapVisualizer

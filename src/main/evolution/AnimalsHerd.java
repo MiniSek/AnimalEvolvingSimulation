@@ -7,39 +7,39 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 public class AnimalsHerd implements IAnimalsHerd{
-    private final ArrayList<Animal> animalsAtPosition = new ArrayList<>();
-    private int numberOfStrongest;
-    private int alphaEnergy;
+    private RectangularBiomesMap map;
 
-    public AnimalsHerd() {
-        this.numberOfStrongest = 0;
-        this.alphaEnergy = 0;
+    private final ArrayList<Animal> animalsAtPosition = new ArrayList<>();
+
+    public AnimalsHerd(RectangularBiomesMap map) {
+        this.map = map;
     }
 
     public void addToHerd(Animal animal) {
-        if(this.sizeOfHerd() == 0 || animal.getEnergy() > this.alphaEnergy) {
-            this.alphaEnergy = animal.getEnergy();
-            this.numberOfStrongest = 1;
-        }
-        else if(animal.getEnergy() == this.alphaEnergy)
-            this.numberOfStrongest += 1;
-
         this.animalsAtPosition.add(abs(Collections.binarySearch(this.animalsAtPosition, animal)+1), animal);
     }
 
     public void removeFromHerd(Animal animal) {
-        if(animal.getEnergy() == this.alphaEnergy)
-            this.numberOfStrongest --;
         this.animalsAtPosition.remove(animal);
     }
 
-    public void feedAnimalsInHerd(int grassEnergy) {
-        int grassPerAnimal = grassEnergy / this.numberOfStrongest;
-        for(int indexOfAnimal = 0; indexOfAnimal < this.numberOfStrongest; indexOfAnimal++)
+    public void removeAnimalsWithZeroEnergy() {
+        for(int i = this.sizeOfHerd()-1; i >= 0 && this.animalsAtPosition.get(i).getEnergy() == 0; i--) {
+            this.map.animalWasDeleted(this.animalsAtPosition.get(i));
+            this.removeFromHerd(this.animalsAtPosition.get(i));
+        }
+    }
+
+    public void feedInHerd(int grassEnergy) {
+        int numberOfStrongestAnimals = 0;
+        while(numberOfStrongestAnimals < this.sizeOfHerd() && this.animalsAtPosition.get(numberOfStrongestAnimals).getEnergy() == this.getAlphaOfHerd().getEnergy())
+            numberOfStrongestAnimals++;
+        int grassPerAnimal = grassEnergy/numberOfStrongestAnimals;
+        for(int indexOfAnimal = 0; indexOfAnimal < numberOfStrongestAnimals; indexOfAnimal++)
             this.animalsAtPosition.get(indexOfAnimal).eatGrass(grassPerAnimal);
     }
 
-    public void breedAnimalsInHerd() {
+    public void breedInHerd() {
         int[] indexesOfParents = this.drawTwoRandomStrongestAnimals();
         this.animalsAtPosition.get(indexesOfParents[0]).breed(this.animalsAtPosition.get(indexesOfParents[1]));
     }
@@ -47,11 +47,14 @@ public class AnimalsHerd implements IAnimalsHerd{
     private int[] drawTwoRandomStrongestAnimals() {
         Random generator = new Random();
         int[] indexesOfParents = new int[2];
-        if(numberOfStrongest > 2) {
-            indexesOfParents[0] = generator.nextInt(this.numberOfStrongest);
-            indexesOfParents[1] = generator.nextInt(this.numberOfStrongest);
+        int numberOfStrongestAnimals = 0;
+        while(numberOfStrongestAnimals < this.sizeOfHerd() && this.animalsAtPosition.get(numberOfStrongestAnimals).getEnergy() == this.getAlphaOfHerd().getEnergy())
+            numberOfStrongestAnimals++;
+        if(numberOfStrongestAnimals > 2) {
+            indexesOfParents[0] = generator.nextInt(numberOfStrongestAnimals);
+            indexesOfParents[1] = generator.nextInt(numberOfStrongestAnimals);
             while (indexesOfParents[0] == indexesOfParents[1])
-                indexesOfParents[1] = generator.nextInt(this.numberOfStrongest);
+                indexesOfParents[1] = generator.nextInt(numberOfStrongestAnimals);
         }
         else {
             indexesOfParents[0]=0;
@@ -63,6 +66,12 @@ public class AnimalsHerd implements IAnimalsHerd{
     public Animal getAlphaOfHerd() {
         if(this.sizeOfHerd() > 0)
             return this.animalsAtPosition.get(0);
+        return null;
+    }
+
+    public Animal getBetaOfHerd() {
+        if(this.sizeOfHerd() > 1)
+            return this.animalsAtPosition.get(1);
         return null;
     }
 

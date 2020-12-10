@@ -7,11 +7,11 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
     private int energy;
     private int livedDays;
     private int numberOfChildren;
-    private Genotype genotype;
+    private final Genotype genotype;
 
     private MapDirection direction;
     private final IWorldMap map;
-    private final ArrayList<IAnimalObserver> observers = new ArrayList<>();
+    private final ArrayList<IAnimalPositionChangedObserver> observers = new ArrayList<>();
 
     public Animal(IWorldMap map, MapDirection direction, Vector2d initialPosition, int animalStartEnergy, Genotype genotype) {
         this.map = map;
@@ -61,6 +61,10 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
         return this.energy;
     }
 
+    public int getLivedDays() { return this.livedDays; }
+
+    public Genotype getGenotype() { return this.genotype; }
+
     public void eatGrass(int energyFromEatenGrass) {
         this.energy += energyFromEatenGrass;
     }
@@ -81,12 +85,6 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
         this.positionChangedInformObservers(oldLocation);
     }
 
-    public void tryToKill() {
-        if(this.energy == 0)
-            this.diedInformObservers(this);
-    }
-
-    //export to another class maybe?
     public void breed(Animal other) {
         Random generator = new Random();
 
@@ -95,33 +93,30 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
 
         Animal childAnimal = new Animal(this.map, childDirection, positionToPlaceNewAnimal,
                 this.giveEnergyToChildAnimal() + other.giveEnergyToChildAnimal(), this.genotype.inheritGenes(other.genotype));
-        this.map.animalToPutAtMap(childAnimal);
+        this.map.animalToAddToMap(childAnimal);
     }
 
     private int giveEnergyToChildAnimal() {
+        //should this line be here?
         this.numberOfChildren += 1;
+
         int energyForChildAnimal = this.energy/4;
         this.energy -= energyForChildAnimal;
         return energyForChildAnimal;
     }
 
-    public void addObserver(IAnimalObserver observer) {
+    public void addObserver(IAnimalPositionChangedObserver observer) {
         this.observers.add(observer);
     }
 
-    public void removeObserver(IAnimalObserver observer) {
-        for(IAnimalObserver observerFromList : this.observers)
+    public void removeObserver(IAnimalPositionChangedObserver observer) {
+        for(IAnimalPositionChangedObserver observerFromList : this.observers)
             if(observerFromList.equals(observer))
                 this.observers.remove(observer);
     }
 
     private void positionChangedInformObservers(Vector2d oldLocation) {
-        for(IAnimalObserver observerFromList : this.observers)
+        for(IAnimalPositionChangedObserver observerFromList : this.observers)
             observerFromList.positionChanged(oldLocation, this);
-    }
-
-    private void diedInformObservers(Animal animal) {
-        for(IAnimalObserver observerFromList : this.observers)
-            observerFromList.died(this);
     }
 }
