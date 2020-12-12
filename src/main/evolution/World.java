@@ -10,7 +10,7 @@ public class World {
             for(int i=0; i<100; i++) {
                 engine = new SimulationEngine(width, height, animalStartEnergy, moveEnergy, plantEnergy, jungleRatio, numberOfAnimals);
                 engine.run();
-                System.out.print("Simulation number: ");
+                System.out.print("It was simulation number: ");
                 System.out.println(i+1);
                 Thread.sleep(5000);
             }

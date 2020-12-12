@@ -2,29 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7f960795-f95d-49c2-8708-619a5cf0a046" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/AbstractWorldMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/AbstractWorldMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/Animal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/AnimalsHerd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/AnimalsHerd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/Genotype.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/Genotype.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/IAnimalObserver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/IAnimalPositionChangedObserver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/IAnimalsHerd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/IAnimalsHerd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/IWorldMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/IWorldMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/MapCoordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/MapCoordinates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/RectangularBiomesMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/RectangularBiomesMap.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/evolution/SimulationWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/SimulationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/SimulationEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/Statistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/Statistics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/Vector2d.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/Vector2d.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/World.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/evolution/Vector2dTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/evolution/Vector2dTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -42,7 +36,20 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Dominik\Desktop\obiektowe\labs\src\main" />
+      <recent name="C:\Users\Dominik\Desktop\obiektowe\labs\src\main\evolution" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.World">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="evolution.SimulationWindow" />
+      <module name="labs" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="World" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="evolution.World" />
       <module name="labs" />
@@ -51,6 +58,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.World" />
+      <item itemvalue="Application.Unnamed" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -73,5 +84,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

@@ -11,8 +11,14 @@ public class SimulationEngine implements IEngine, IAnimalsBehaviourOnMapObserver
     private final int grassEnergy;
     private final int animalStartEnergy;
 
+    private final int width;
+    private final int height;
+
     public SimulationEngine(int width, int height, int animalStartEnergy, int animalMoveEnergy, int grassEnergy,
                             double jungleRatio, int numberOfAnimalsAtStart) {
+        this.width = width;
+        this.height = height;
+
         this.map = new RectangularBiomesMap(width, height, jungleRatio, numberOfAnimalsAtStart);
         this.map.addObserver(this);
 
@@ -24,7 +30,10 @@ public class SimulationEngine implements IEngine, IAnimalsBehaviourOnMapObserver
     }
 
     public void run(){
+        SimulationWindow window = new SimulationWindow(this.width, this.height, this.map);
         for(int i=0; i<1000000; i++) {       //one iteration = one day
+            window.updateField();
+
             this.map.deleteAnimalsWithZeroEnergy();
             this.deleteDeadAnimals();
 
@@ -39,19 +48,6 @@ public class SimulationEngine implements IEngine, IAnimalsBehaviourOnMapObserver
 
             this.map.growGrasses();
 
-            System.out.println(this.map.toString());
-            System.out.print("After day: ");
-            System.out.println(i+1);
-            System.out.println("Number of animals: " + this.map.statistics.numberOfAnimals);
-            System.out.println("Number of grass in jungle: " + this.map.statistics.numberOfGrassesInJungle);
-            System.out.println("Number of grass in savanna: " + this.map.statistics.numberOfGrassesInSavanna);
-            System.out.println("Number of dead animals: " + this.map.statistics.numberOfDeadAnimals);
-            System.out.println("Number of days in summary for dead animals: " + this.map.statistics.numberOfLivedDaysInSummaryForDeadAnimals);
-            if(this.map.statistics.numberOfDeadAnimals > 0)
-                System.out.println("Average live long for dead animal: " + this.map.statistics.numberOfLivedDaysInSummaryForDeadAnimals/this.map.statistics.numberOfDeadAnimals);
-            else
-                System.out.println("Average live long for dead animal: 0");
-
             int energySum = 0;
             int childrenSum = 0;
             ArrayList<String> animalsGenesNumbersToSort = new ArrayList<>();
@@ -60,42 +56,27 @@ public class SimulationEngine implements IEngine, IAnimalsBehaviourOnMapObserver
                 childrenSum += animal.getLivedDays();
                 animalsGenesNumbersToSort.add(animal.getGenotype().numberOfEachGeneStr);
             }
-            Collections.sort(animalsGenesNumbersToSort);
-            System.out.println("Most common genotype: " + this.mostCommon(animalsGenesNumbersToSort));
 
-            if(this.map.statistics.numberOfAnimals > 0) {
-                System.out.println("Average energy per living animal: " + energySum / this.map.statistics.numberOfAnimals);
-                System.out.println("Average number of children per living animal: " + childrenSum / this.map.statistics.numberOfAnimals);
-            }
-            else {
-                System.out.println("Average energy per living animal: 0");
-                System.out.println("Average number of children per living animal: 0");
-            }
+            this.map.statistics.updateStatistics(energySum, childrenSum, animalsGenesNumbersToSort);
 
-            if(this.map.statistics.numberOfAnimals < 3)
+            System.out.println(this.map.toString());
+
+            System.out.println("After day: " + this.map.statistics.numberOfDay);
+            System.out.println("Number of animals: " + this.map.statistics.numberOfAnimals);
+            System.out.println("Number of grass in jungle: " + this.map.statistics.numberOfGrassesInJungle);
+            System.out.println("Number of grass in savanna: " + this.map.statistics.numberOfGrassesInSavanna);
+            System.out.println("Number of dead animals: " + this.map.statistics.numberOfDeadAnimals);
+            System.out.println("Number of days in summary for dead animals: " + this.map.statistics.numberOfLivedDaysInSummaryForDeadAnimals);
+            System.out.println("Average live long for dead animal: " + this.map.statistics.averageliveLongForDeadAnimal);
+            System.out.println("Most common genotype: " + this.map.statistics.mostCommonGenotype);
+            System.out.println("Average energy per living animal: " + this.map.statistics.averageEnergyPerLivingAnimal);
+            System.out.println("Average number of children per living animal: " + this.map.statistics.averageNumberOfChildrenPerLivingAnimal);
+
+            if(this.map.statistics.numberOfAnimals < 3) {
+                window.close();
                 break;
-
-        }
-    }
-
-    public String mostCommon(ArrayList<String> tablica) {
-        String previous = "";
-        int bestCount = 0;
-        int count = 1;
-        String bestString = "";
-        for(int i = 0; i < tablica.size(); i++) {
-            if(tablica.get(i).equals(previous))
-                count++;
-            else
-                count = 1;
-
-            if(count > bestCount) {
-                bestCount = count;
-                bestString = tablica.get(i);
             }
-            previous = tablica.get(i);
         }
-        return bestString;
     }
 
     private void deleteDeadAnimals() {
