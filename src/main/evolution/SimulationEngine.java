@@ -1,8 +1,11 @@
 package evolution;
 
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
-public class SimulationEngine implements IEngine, IAnimalsBehaviourOnMapObserver {
+public class SimulationEngine implements ActionListener, IEngine, IAnimalsBehaviourOnMapObserver {
     private final RectangularBiomesMap map;
     private final ArrayList<Animal> animals = new ArrayList<>();
     private final ArrayList<Animal> animalsToDelete = new ArrayList<>();
@@ -13,6 +16,10 @@ public class SimulationEngine implements IEngine, IAnimalsBehaviourOnMapObserver
 
     private final int width;
     private final int height;
+
+    private Timer timer;
+
+    private SimulationWindow window;
 
     public SimulationEngine(int width, int height, int animalStartEnergy, int animalMoveEnergy, int grassEnergy,
                             double jungleRatio, int numberOfAnimalsAtStart) {
@@ -27,56 +34,57 @@ public class SimulationEngine implements IEngine, IAnimalsBehaviourOnMapObserver
         this.animalStartEnergy = animalStartEnergy;
 
         this.distributeAnimals(width, height, numberOfAnimalsAtStart, animalStartEnergy);
+
+        this.window = new SimulationWindow(this.map, width, height);
+
+        this.timer = new Timer(10, this);
     }
 
-    public void run(){
-        SimulationWindow window = new SimulationWindow(this.width, this.height, this.map);
-        for(int i=0; i<1000000; i++) {       //one iteration = one day
-            window.updateField();
+    @Override public void actionPerformed(ActionEvent e) {
+        this.window.update();
 
-            this.map.deleteAnimalsWithZeroEnergy();
-            this.deleteDeadAnimals();
+        this.map.deleteAnimalsWithZeroEnergy();
+        this.deleteDeadAnimals();
 
-            for(Animal animal : this.animals) {
-                animal.turn();
-                animal.move(this.animalMoveEnergy);
-            }
-
-            this.map.animalsEat(this.grassEnergy);
-
-            this.map.animalsReproduce(this.animalStartEnergy);
-
-            this.map.growGrasses();
-
-            int energySum = 0;
-            int childrenSum = 0;
-            ArrayList<String> animalsGenesNumbersToSort = new ArrayList<>();
-            for(Animal animal : this.animals) {
-                energySum += animal.getEnergy();
-                childrenSum += animal.getLivedDays();
-                animalsGenesNumbersToSort.add(animal.getGenotype().numberOfEachGeneStr);
-            }
-
-            this.map.statistics.updateStatistics(energySum, childrenSum, animalsGenesNumbersToSort);
-
-            System.out.println(this.map.toString());
-
-            System.out.println("After day: " + this.map.statistics.numberOfDay);
-            System.out.println("Number of animals: " + this.map.statistics.numberOfAnimals);
-            System.out.println("Number of grass in jungle: " + this.map.statistics.numberOfGrassesInJungle);
-            System.out.println("Number of grass in savanna: " + this.map.statistics.numberOfGrassesInSavanna);
-            System.out.println("Number of dead animals: " + this.map.statistics.numberOfDeadAnimals);
-            System.out.println("Number of days in summary for dead animals: " + this.map.statistics.numberOfLivedDaysInSummaryForDeadAnimals);
-            System.out.println("Average live long for dead animal: " + this.map.statistics.averageliveLongForDeadAnimal);
-            System.out.println("Most common genotype: " + this.map.statistics.mostCommonGenotype);
-            System.out.println("Average energy per living animal: " + this.map.statistics.averageEnergyPerLivingAnimal);
-            System.out.println("Average number of children per living animal: " + this.map.statistics.averageNumberOfChildrenPerLivingAnimal);
-
-            if(this.map.statistics.numberOfAnimals < 3) {
-                window.close();
-                break;
-            }
+        for (Animal animal : this.animals) {
+            animal.turn();
+            animal.move(this.animalMoveEnergy);
         }
+
+        this.map.animalsEat(this.grassEnergy);
+
+        this.map.animalsReproduce(this.animalStartEnergy);
+
+        this.map.growGrasses();
+
+        this.helpToUpdateStatistics();
+    }
+
+    public void run() {
+        timer.start();
+//            System.out.println("After day: " + this.map.statistics.numberOfDay);
+//            System.out.println("Number of animals: " + this.map.statistics.numberOfAnimals);
+//            System.out.println("Number of grass in jungle: " + this.map.statistics.numberOfGrassesInJungle);
+//            System.out.println("Number of grass in savanna: " + this.map.statistics.numberOfGrassesInSavanna);
+//            System.out.println("Number of dead animals: " + this.map.statistics.numberOfDeadAnimals);
+//            System.out.println("Number of days in summary for dead animals: " + this.map.statistics.numberOfLivedDaysInSummaryForDeadAnimals);
+//            System.out.println("Average live long for dead animal: " + this.map.statistics.averageliveLongForDeadAnimal);
+//            System.out.println("Most common genotype: " + this.map.statistics.mostCommonGenotype);
+//            System.out.println("Average energy per living animal: " + this.map.statistics.averageEnergyPerLivingAnimal);
+//            System.out.println("Average number of children per living animal: " + this.map.statistics.averageNumberOfChildrenPerLivingAnimal);
+    }
+
+    private void helpToUpdateStatistics() {
+        int energySum = 0;
+        int childrenSum = 0;
+        ArrayList<String> animalsGenesNumbersToSort = new ArrayList<>();
+        for(Animal animal : this.animals) {
+            energySum += animal.getEnergy();
+            childrenSum += animal.getLivedDays();
+            animalsGenesNumbersToSort.add(animal.getGenotype().numberOfEachGeneStr);
+        }
+
+        this.map.statistics.updateStatistics(energySum, childrenSum, animalsGenesNumbersToSort);
     }
 
     private void deleteDeadAnimals() {

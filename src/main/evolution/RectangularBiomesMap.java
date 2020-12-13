@@ -50,6 +50,18 @@ public class RectangularBiomesMap extends AbstractWorldMap{
         return herdAtPosition.getAlphaOfHerd();
     }
 
+    public Vector2d getLowerLeftJungleVector() {
+        return this.coordinates.leftLowerCornerOfJungle;
+    }
+
+    public int getjungleWidth() {
+        return this.coordinates.jungleWidth;
+    }
+
+    public int getjungleHeight() {
+        return this.coordinates.jungleHeight;
+    }
+
     public boolean placeGrass(Vector2d location) {
         //grass cannot grow at position where is grass or animal
         if(!this.isOccupied(location)) {
