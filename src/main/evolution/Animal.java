@@ -22,6 +22,7 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
         this.numberOfChildren = 0;
         this.genotype = genotype;
         this.genotype.sortGenes();
+        this.genotype.rewriteGenesToString();
     }
 
     public int compareTo(Animal other) {
@@ -63,7 +64,7 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
 
     public int getLivedDays() { return this.livedDays; }
 
-    public Genotype getGenotype() { return this.genotype; }
+    public String getGenotype() { return this.genotype.genesString; }
 
     public void eatGrass(int energyFromEatenGrass) {
         this.energy += energyFromEatenGrass;

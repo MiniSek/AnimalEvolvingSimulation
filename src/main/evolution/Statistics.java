@@ -2,6 +2,7 @@ package evolution;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class Statistics {
     public int numberOfDay;
@@ -12,7 +13,7 @@ public class Statistics {
     public int numberOfGrassesInJungle;
     public int numberOfGrassesInSavanna;
     public int numberOfGrassesInTotal;
-    public float averageliveLongForDeadAnimal;
+    public float averageLiveLongForDeadAnimal;
     public float averageEnergyPerLivingAnimal;
     public float averageNumberOfChildrenPerLivingAnimal;
     public String mostCommonGenotype;
@@ -30,21 +31,21 @@ public class Statistics {
         this.numberOfGrassesInSavanna = 0;
         this.numberOfGrassesInTotal = 0;
 
-        this.averageliveLongForDeadAnimal = 0;
+        this.averageLiveLongForDeadAnimal = 0;
         this.averageEnergyPerLivingAnimal = 0;
         this.averageNumberOfChildrenPerLivingAnimal = 0;
 
         this.mostCommonGenotype = "";
     }
 
-    public void updateStatistics(int energySum, int childrenSum, ArrayList<String> animalsGenesNumbersToSort) {
+    public void updateStatistics(int energySum, int childrenSum, ArrayList<Animal> animalsGenesNumbersToSort) {
         this.numberOfDay += 1;
         this.numberOfGrassesInTotal = this.numberOfGrassesInJungle + this.numberOfGrassesInSavanna;
         if(this.numberOfDeadAnimals > 0)
 
-            this.averageliveLongForDeadAnimal = this.numberOfLivedDaysInSummaryForDeadAnimals/this.numberOfDeadAnimals;
+            this.averageLiveLongForDeadAnimal = this.numberOfLivedDaysInSummaryForDeadAnimals/this.numberOfDeadAnimals;
         else
-            this.averageliveLongForDeadAnimal = 0;
+            this.averageLiveLongForDeadAnimal = 0;
 
         if(this.numberOfAnimals > 0) {
             this.averageEnergyPerLivingAnimal = energySum/this.numberOfAnimals;
@@ -55,28 +56,33 @@ public class Statistics {
             this.averageNumberOfChildrenPerLivingAnimal = 0;
         }
 
-        Collections.sort(animalsGenesNumbersToSort);
-        this.mostCommonGenotype = this.mostCommon(animalsGenesNumbersToSort);
+        Collections.sort(animalsGenesNumbersToSort, new SortByGenotype());
+        this.mostCommonGenotype = this.mostCommonGenotype(animalsGenesNumbersToSort);
     }
 
-    public String mostCommon(ArrayList<String> tablica) {
+    class SortByGenotype implements Comparator<Animal> {
+        public int compare(Animal first, Animal second) {
+            return first.getGenotype().compareTo(second.getGenotype());
+        }
+    }
+
+    public String mostCommonGenotype(ArrayList<Animal> animalsSortedByGenotype) {
         String previous = "";
         int bestCount = 0;
         int count = 1;
         String bestString = "";
-        for(int i = 0; i < tablica.size(); i++) {
-            if(tablica.get(i).equals(previous))
+        for(int i = 0; i < animalsSortedByGenotype.size(); i++) {
+            if(animalsSortedByGenotype.get(i).getGenotype().equals(previous))
                 count++;
             else
                 count = 1;
 
             if(count > bestCount) {
                 bestCount = count;
-                bestString = tablica.get(i);
+                bestString = animalsSortedByGenotype.get(i).getGenotype();
             }
-            previous = tablica.get(i);
+            previous = animalsSortedByGenotype.get(i).getGenotype();
         }
         return bestString;
     }
-
 }

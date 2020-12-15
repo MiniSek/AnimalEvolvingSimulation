@@ -29,9 +29,9 @@ public class DataInputWindow extends JPanel implements ActionListener {
         this.startSimulations.setForeground(Color.BLACK);
         this.startSimulations.setVerticalTextPosition(JButton.CENTER);
         this.startSimulations.setFocusable(false);
-        this.startSimulations.setBackground(Color.RED);
+        this.startSimulations.setBackground(Color.green);
         this.startSimulations.addActionListener(this);
-        //this.startSimulations.setEnabled(false);
+
 
         this.inputWindow = new JFrame();
         this.inputWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,25 +55,55 @@ public class DataInputWindow extends JPanel implements ActionListener {
     }
 
     @Override public void actionPerformed(ActionEvent e) {
-        this.getData();
-        IEngine engine = new SimulationEngine(this.mapWidth, this.mapHeight, this.animalsStartEnergy, this.moveEnergy, this.grassEnergy, this.jungleRatio, this.animalsAtStart);
-        engine.run();
+        if(this.validateData()) {
+            this.getData();
+            IEngine engine = new SimulationEngine(this.mapWidth, this.mapHeight, this.animalsStartEnergy, this.moveEnergy, this.grassEnergy, this.jungleRatio, this.animalsAtStart);
+            engine.run();
+        }
     }
 
     private void getData() {
-        String dataString;
-        int data[] = new int[7];
-        for(int i = 0; i < 7; i++) {
-            if(i != 2)
-                data[i] = Integer.parseInt(this.dataFields[i].getText());
-        }
-        this.mapWidth = data[0];
-        this.mapHeight = data[1];
+        this.mapWidth = Integer.parseInt(this.dataFields[0].getText());
+        this.mapHeight = Integer.parseInt(this.dataFields[1].getText());
         this.jungleRatio = Double.parseDouble(this.dataFields[2].getText());
-        this.animalsAtStart = data[3];
-        this.animalsStartEnergy = data[4];
-        this.moveEnergy = data[5];
-        this.grassEnergy = data[6];
+        this.animalsAtStart = Integer.parseInt(this.dataFields[3].getText());
+        this.animalsStartEnergy = Integer.parseInt(this.dataFields[4].getText());
+        this.moveEnergy = Integer.parseInt(this.dataFields[5].getText());
+        this.grassEnergy = Integer.parseInt(this.dataFields[6].getText());
+    }
+
+    private boolean validateData() {
+        for(int i = 0; i < 7; i++) {
+            if(i != 2) {
+                String data = this.dataFields[i].getText();
+                if(data.charAt(0) == 48) {
+                    this.dataFields[i].setBackground(Color.red);
+                    return false;
+                }
+                for (int j = 0; j < data.length(); j++) {
+                    if(data.charAt(j) < 48 || data.charAt(j) > 57) {
+                        this.dataFields[i].setBackground(Color.red);
+                        return false;
+                    }
+                }
+                this.dataFields[i].setBackground(Color.white);
+            }
+            else {
+                String data = this.dataFields[i].getText();
+                if ((data.charAt(0) != 48 && data.charAt(0) != 49) || (data.length() > 1 && (data.charAt(1) != 46 && data.charAt(1) != 44))) {
+                    this.dataFields[i].setBackground(Color.red);
+                    return false;
+                }
+                for (int j = 2; j < data.length(); j++) {
+                    if(data.charAt(j) < 48 || data.charAt(j) > 57) {
+                        this.dataFields[i].setBackground(Color.red);
+                        return false;
+                    }
+                }
+                this.dataFields[i].setBackground(Color.white);
+            }
+        }
+        return true;
     }
 
     private void setLabels() {

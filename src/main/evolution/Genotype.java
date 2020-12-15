@@ -5,11 +5,11 @@ import java.util.Random;
 
 public class Genotype {
     public byte[] genes;
-    public String numberOfEachGeneStr;
+    public String genesString;
 
     public Genotype(){
         this.genes = new byte[32];
-        this.numberOfEachGeneStr = "";
+        this.genesString = "";
     }
 
     public void sortGenes() {
@@ -19,13 +19,6 @@ public class Genotype {
     public byte drawGene() {
         Random generator = new Random();
         return this.genes[generator.nextInt(32)];
-    }
-
-    public boolean areEqual(Genotype other) {
-        for(int i = 0; i < 32; i++)
-            if(this.genes[i] != other.genes[i])
-                return false;
-        return true;
     }
 
     public Genotype inheritGenes(Genotype other) {
@@ -82,9 +75,11 @@ public class Genotype {
                 childGenotype.genes[possibleIndexToAddMissingGene] = i;
             }
 
-        for(int i = 0; i < 8; i++)
-            childGenotype.numberOfEachGeneStr = childGenotype.numberOfEachGeneStr + String.valueOf(numberOfEachGeneInChildGenotype[i]);
-
         return childGenotype;
+    }
+
+    public void rewriteGenesToString() {
+        for(int i = 0; i < 32; i++)
+            this.genesString += String.valueOf(this.genes[i]);
     }
 }

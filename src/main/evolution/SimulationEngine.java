@@ -35,9 +35,9 @@ public class SimulationEngine implements ActionListener, IEngine, IAnimalsBehavi
 
         this.distributeAnimals(width, height, numberOfAnimalsAtStart, animalStartEnergy);
 
-        this.window = new SimulationWindow(this.map, width, height);
+        this.window = new SimulationWindow(this, this.map, width, height, animalStartEnergy);
 
-        this.timer = new Timer(10, this);
+        this.timer = new Timer(100, this);
     }
 
     @Override public void actionPerformed(ActionEvent e) {
@@ -61,27 +61,34 @@ public class SimulationEngine implements ActionListener, IEngine, IAnimalsBehavi
     }
 
     public void run() {
-        timer.start();
-//            System.out.println("After day: " + this.map.statistics.numberOfDay);
-//            System.out.println("Number of animals: " + this.map.statistics.numberOfAnimals);
-//            System.out.println("Number of grass in jungle: " + this.map.statistics.numberOfGrassesInJungle);
-//            System.out.println("Number of grass in savanna: " + this.map.statistics.numberOfGrassesInSavanna);
-//            System.out.println("Number of dead animals: " + this.map.statistics.numberOfDeadAnimals);
-//            System.out.println("Number of days in summary for dead animals: " + this.map.statistics.numberOfLivedDaysInSummaryForDeadAnimals);
-//            System.out.println("Average live long for dead animal: " + this.map.statistics.averageliveLongForDeadAnimal);
-//            System.out.println("Most common genotype: " + this.map.statistics.mostCommonGenotype);
-//            System.out.println("Average energy per living animal: " + this.map.statistics.averageEnergyPerLivingAnimal);
-//            System.out.println("Average number of children per living animal: " + this.map.statistics.averageNumberOfChildrenPerLivingAnimal);
+        this.timer.start();
+    }
+
+    public void stopTimer() {
+        this.timer.stop();
+    }
+
+    public boolean isTimerStopped() {
+        return !this.timer.isRunning();
+    }
+
+    public ArrayList<Animal> giveAnimalsWithMostCommonGenotype() {
+        ArrayList<Animal> animalsWithMostCommonGenotype = new ArrayList<>();
+        for(Animal animal : this.animals) {
+            if(animal.getGenotype().equals(this.map.statistics.mostCommonGenotype))
+                animalsWithMostCommonGenotype.add(animal);
+        }
+        return animalsWithMostCommonGenotype;
     }
 
     private void helpToUpdateStatistics() {
         int energySum = 0;
         int childrenSum = 0;
-        ArrayList<String> animalsGenesNumbersToSort = new ArrayList<>();
+        ArrayList<Animal> animalsGenesNumbersToSort = new ArrayList<>();
         for(Animal animal : this.animals) {
             energySum += animal.getEnergy();
             childrenSum += animal.getLivedDays();
-            animalsGenesNumbersToSort.add(animal.getGenotype().numberOfEachGeneStr);
+            animalsGenesNumbersToSort.add(animal);
         }
 
         this.map.statistics.updateStatistics(energySum, childrenSum, animalsGenesNumbersToSort);
@@ -100,17 +107,8 @@ public class SimulationEngine implements ActionListener, IEngine, IAnimalsBehavi
             Vector2d possibleLocation = new Vector2d(generator.nextInt(mapWidth),
                     generator.nextInt(mapHeight));
             Genotype genotype = new Genotype();
-            for(int numberOfGene = 0; numberOfGene < 32; numberOfGene += 1) {
+            for(int numberOfGene = 0; numberOfGene < 32; numberOfGene += 1)
                 genotype.genes[numberOfGene] = (byte)generator.nextInt(8);
-            }
-
-            byte[] numberOfGenes = {0,0,0,0,0,0,0,0};
-            String numberOfGenesStr = "";
-            for(int numberOfGene = 0; numberOfGene < 32; numberOfGene++)
-                numberOfGenes[genotype.genes[numberOfGene]]++;
-            for(int i = 0; i < 8; i++)
-                numberOfGenesStr = numberOfGenesStr + String.valueOf(numberOfGenes[i]);
-            genotype.numberOfEachGeneStr = numberOfGenesStr;
 
             MapDirection direction = MapDirection.values()[generator.nextInt(8)];
 
