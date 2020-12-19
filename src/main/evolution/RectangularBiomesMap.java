@@ -54,11 +54,11 @@ public class RectangularBiomesMap extends AbstractWorldMap{
         return this.coordinates.leftLowerCornerOfJungle;
     }
 
-    public int getjungleWidth() {
+    public int getJungleWidth() {
         return this.coordinates.jungleWidth;
     }
 
-    public int getjungleHeight() {
+    public int getJungleHeight() {
         return this.coordinates.jungleHeight;
     }
 

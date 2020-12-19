@@ -1,0 +1,8 @@
+Number of days: 28
+Average number of animals at map: 68.04
+Average number of grasses at map: 21.25
+Most common genotype in simulation: 00001111223444444455555566667777
+Number of most common genotype in simulation: 46
+Average of average energy per living animal in simulation: 38.04
+Average of average of live long for dead animals in simulation: 15.87
+Average of average of number of children per living animal in simulation: 0.2

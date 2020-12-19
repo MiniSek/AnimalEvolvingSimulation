@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class DataInputWindow extends JPanel implements ActionListener {
     private JFrame inputWindow;
-    private JButton startSimulations;
+    private JButton startSimulation;
 
     private JLabel mapWidthLabel;
     private JLabel mapHeightLabel;
@@ -20,18 +20,17 @@ public class DataInputWindow extends JPanel implements ActionListener {
     private int mapWidth, mapHeight, animalsAtStart, animalsStartEnergy, moveEnergy, grassEnergy;
     private double jungleRatio;
 
-    private JTextField[] dataFields;
+    private JTextField[] dataTextFields;
 
     public DataInputWindow() {
-        this.startSimulations = new JButton("Start simulations");
-        this.startSimulations.setBounds(100, 420, 300, 40);
-        this.startSimulations.setFont(new Font("Calibri", Font.PLAIN, 20));
-        this.startSimulations.setForeground(Color.BLACK);
-        this.startSimulations.setVerticalTextPosition(JButton.CENTER);
-        this.startSimulations.setFocusable(false);
-        this.startSimulations.setBackground(Color.green);
-        this.startSimulations.addActionListener(this);
-
+        this.startSimulation = new JButton("Start simulations");
+        this.startSimulation.setBounds(100, 420, 300, 40);
+        this.startSimulation.setFont(new Font("Calibri", Font.PLAIN, 20));
+        this.startSimulation.setForeground(Color.BLACK);
+        this.startSimulation.setVerticalTextPosition(JButton.CENTER);
+        this.startSimulation.setFocusable(false);
+        this.startSimulation.setBackground(Color.green);
+        this.startSimulation.addActionListener(this);
 
         this.inputWindow = new JFrame();
         this.inputWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,7 +41,7 @@ public class DataInputWindow extends JPanel implements ActionListener {
         this.inputWindow.setLocationByPlatform(true);
 
         this.setLayout(null);
-        this.add(this.startSimulations);
+        this.add(this.startSimulation);
 
         this.setLabels();
         this.setTextFields();
@@ -63,45 +62,50 @@ public class DataInputWindow extends JPanel implements ActionListener {
     }
 
     private void getData() {
-        this.mapWidth = Integer.parseInt(this.dataFields[0].getText());
-        this.mapHeight = Integer.parseInt(this.dataFields[1].getText());
-        this.jungleRatio = Double.parseDouble(this.dataFields[2].getText());
-        this.animalsAtStart = Integer.parseInt(this.dataFields[3].getText());
-        this.animalsStartEnergy = Integer.parseInt(this.dataFields[4].getText());
-        this.moveEnergy = Integer.parseInt(this.dataFields[5].getText());
-        this.grassEnergy = Integer.parseInt(this.dataFields[6].getText());
+        this.mapWidth = Integer.parseInt(this.dataTextFields[0].getText());
+        this.mapHeight = Integer.parseInt(this.dataTextFields[1].getText());
+        this.jungleRatio = Double.parseDouble(this.dataTextFields[2].getText());
+        this.animalsAtStart = Integer.parseInt(this.dataTextFields[3].getText());
+        this.animalsStartEnergy = Integer.parseInt(this.dataTextFields[4].getText());
+        this.moveEnergy = Integer.parseInt(this.dataTextFields[5].getText());
+        this.grassEnergy = Integer.parseInt(this.dataTextFields[6].getText());
     }
 
     private boolean validateData() {
         for(int i = 0; i < 7; i++) {
             if(i != 2) {
-                String data = this.dataFields[i].getText();
+                String data = this.dataTextFields[i].getText();
                 if(data.charAt(0) == 48) {
-                    this.dataFields[i].setBackground(Color.red);
+                    this.dataTextFields[i].setBackground(Color.red);
                     return false;
                 }
                 for (int j = 0; j < data.length(); j++) {
                     if(data.charAt(j) < 48 || data.charAt(j) > 57) {
-                        this.dataFields[i].setBackground(Color.red);
+                        this.dataTextFields[i].setBackground(Color.red);
                         return false;
                     }
                 }
-                this.dataFields[i].setBackground(Color.white);
+                this.dataTextFields[i].setBackground(Color.white);
             }
             else {
-                String data = this.dataFields[i].getText();
+                String data = this.dataTextFields[i].getText();
                 if ((data.charAt(0) != 48 && data.charAt(0) != 49) || (data.length() > 1 && (data.charAt(1) != 46 && data.charAt(1) != 44))) {
-                    this.dataFields[i].setBackground(Color.red);
+                    this.dataTextFields[i].setBackground(Color.red);
                     return false;
                 }
                 for (int j = 2; j < data.length(); j++) {
                     if(data.charAt(j) < 48 || data.charAt(j) > 57) {
-                        this.dataFields[i].setBackground(Color.red);
+                        this.dataTextFields[i].setBackground(Color.red);
                         return false;
                     }
                 }
-                this.dataFields[i].setBackground(Color.white);
+                this.dataTextFields[i].setBackground(Color.white);
             }
+        }
+        if(Integer.parseInt(this.dataTextFields[0].getText()) * Integer.parseInt(this.dataTextFields[1].getText()) <
+                Integer.parseInt(this.dataTextFields[3].getText())){
+            this.dataTextFields[3].setBackground(Color.red);
+            return false;
         }
         return true;
     }
@@ -144,21 +148,20 @@ public class DataInputWindow extends JPanel implements ActionListener {
     }
 
     private void setTextFields() {
-        this.dataFields = new JTextField[7];
+        this.dataTextFields = new JTextField[7];
 
         for(int i = 0; i < 7; i++) {
-            this.dataFields[i] = new JTextField();
-            this.dataFields[i].setBounds(370, 40 + i*50, 50, 30);
-            this.dataFields[i].setText("");
-            this.add(this.dataFields[i]);
+            this.dataTextFields[i] = new JTextField();
+            this.dataTextFields[i].setBounds(370, 40 + i*50, 50, 30);
+            this.dataTextFields[i].setText("");
+            this.add(this.dataTextFields[i]);
         }
-        this.dataFields[0].setText("50");
-        this.dataFields[1].setText("50");
-        this.dataFields[2].setText("0.3");
-        this.dataFields[3].setText("60");
-        this.dataFields[4].setText("50");
-        this.dataFields[5].setText("1");
-        this.dataFields[6].setText("40");
+        this.dataTextFields[0].setText("50");
+        this.dataTextFields[1].setText("50");
+        this.dataTextFields[2].setText("0.3");
+        this.dataTextFields[3].setText("60");
+        this.dataTextFields[4].setText("50");
+        this.dataTextFields[5].setText("1");
+        this.dataTextFields[6].setText("40");
     }
-
 }

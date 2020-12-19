@@ -44,7 +44,7 @@ public class Genotype {
 
         //genes with indexes [firstIndex+1, secondIndex] are from this Genotype and genes with indexes [secondIndex+1, 31]
         //are from other Genotype
-        //or vide versa
+        //or vice versa
         if(generator.nextBoolean()) {
             for(int i = firstIndex + 1; i <= secondIndex; i++)
                 childGenotype.genes[i] = this.genes[i];
@@ -59,23 +59,27 @@ public class Genotype {
         }
 
         childGenotype.sortGenes();
+        childGenotype.repairGenotype();
 
+        return childGenotype;
+    }
+
+    public void repairGenotype() {
+        Random generator = new Random();
         byte[] numberOfEachGeneInChildGenotype = {0,0,0,0, 0,0,0,0};
         for(int i = 0; i < 32; i++)
-            numberOfEachGeneInChildGenotype[childGenotype.genes[i]] += 1;
+            numberOfEachGeneInChildGenotype[this.genes[i]] += 1;
 
         for(byte i = 0; i < 8; i++)
             if(numberOfEachGeneInChildGenotype[i] == 0) {
                 int possibleIndexToAddMissingGene = generator.nextInt(32);
                 //missing gene cannot be added at position where is gene which is only one in genotype
-                while(numberOfEachGeneInChildGenotype[childGenotype.genes[possibleIndexToAddMissingGene]] < 2)
-                    possibleIndexToAddMissingGene=generator.nextInt(32);
-                numberOfEachGeneInChildGenotype[childGenotype.genes[possibleIndexToAddMissingGene]]--;
+                while(numberOfEachGeneInChildGenotype[this.genes[possibleIndexToAddMissingGene]] <= 1)
+                    possibleIndexToAddMissingGene = generator.nextInt(32);
+                numberOfEachGeneInChildGenotype[this.genes[possibleIndexToAddMissingGene]]--;
                 numberOfEachGeneInChildGenotype[i]++;
-                childGenotype.genes[possibleIndexToAddMissingGene] = i;
+                this.genes[possibleIndexToAddMissingGene] = i;
             }
-
-        return childGenotype;
     }
 
     public void rewriteGenesToString() {

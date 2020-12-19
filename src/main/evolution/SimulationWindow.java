@@ -2,50 +2,54 @@ package evolution;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
-public class SimulationWindow extends JPanel implements IMediate{
-    private JFrame frame;
+public class SimulationWindow extends JPanel implements IMediate, WindowListener {
+    private final JFrame frame;
+    private final SimulationEngine engine;
 
-    private SimulationEngine engine;
+    private final RenderMapPanel renderMapPanel;
+    private final StatisticsPanel statisticsPanel;
+    private final FollowedAnimalStatsPanel followedAnimalStatsPanel;
+    private final ButtonsPanel buttonsPanel;
 
-    private RenderPanel renderPanel;
-    private StatisticsPanel statisticsPanel;
-    private ButtonsPanel buttonsPanel;
-    private FollowedAnimalPanel followedAnimalPanel;
-
-    private int windowWidth = 1400;
-    private int windowHeight = 760;
+    private final int windowWidth = 1400;
+    private final int windowHeight = 760;
 
     public SimulationWindow(SimulationEngine engine, RectangularBiomesMap map, int width, int height, int animalsStartEnergy) {
         this.engine = engine;
-        this.renderPanel = new RenderPanel(this, map, width, height, animalsStartEnergy);
-        this.renderPanel.setSize(new Dimension(1, 1));
+        this.renderMapPanel = new RenderMapPanel(this, engine, map, width, height, animalsStartEnergy);
+        this.renderMapPanel.setSize(new Dimension(1, 1));
+
+        this.buttonsPanel = new ButtonsPanel(this, engine);
+        this.buttonsPanel.setLocation(0, 660);
+        this.buttonsPanel.setSize(600, 100);
+
+        this.followedAnimalStatsPanel = new FollowedAnimalStatsPanel(engine);
+        this.followedAnimalStatsPanel.setLocation(0, 400);
+        this.followedAnimalStatsPanel.setSize(600, 260);
 
         this.statisticsPanel = new StatisticsPanel(map);
         this.statisticsPanel.setLocation(0,0);
         this.statisticsPanel.setSize(600, 400);
 
-        this.buttonsPanel = new ButtonsPanel(this, map);
-        this.buttonsPanel.setLocation(0, 400);
-        this.buttonsPanel.setSize(600, 60);
-
-        this.followedAnimalPanel = new FollowedAnimalPanel(this, map);
-        this.followedAnimalPanel.setLocation(0, 460);
-        this.followedAnimalPanel.setSize(600, 300);
-
         frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setResizable(false);
         frame.getContentPane().add(this);
         frame.pack();
         frame.setLocationByPlatform(true);
         frame.setLayout(null);
+
+        frame.addWindowListener(this);
+
         this.setLayout(null);
 
-        this.add(this.renderPanel);
+        this.add(this.renderMapPanel);
         this.add(this.statisticsPanel);
         this.add(this.buttonsPanel);
-        this.add(this.followedAnimalPanel);
+        this.add(this.followedAnimalStatsPanel);
 
         frame.setVisible(true);
     }
@@ -55,34 +59,56 @@ public class SimulationWindow extends JPanel implements IMediate{
     }
 
     public void update() {
-        this.renderPanel.repaint();
+        this.renderMapPanel.repaint();
         this.statisticsPanel.updateStatistics();
+        if(this.engine.animalSelected != null)
+            this.followedAnimalStatsPanel.updateAnimalStats(this.engine.countDescendants());
     }
 
     public void notifyMediator(Object sender, String event) {
-        if(sender instanceof FollowedAnimalPanel && event == "highlight clicked") {
-            if(this.engine.isTimerStopped()) {
-                this.renderPanel.animalsToHighlight = this.engine.giveAnimalsWithMostCommonGenotype();
-                this.renderPanel.repaint();
-            }
-        }
-
-        if(sender instanceof  ButtonsPanel) {
-            if(event == "stop clicked") {
+        if(sender instanceof ButtonsPanel) {
+            if(event.equals("stop clicked")) {
                 this.engine.stopTimer();
             }
-            else if(event == "start clicked") {
-                this.renderPanel.selectedAnimal = null;
-                this.renderPanel.animalsToHighlight = null;
-                this.followedAnimalPanel.showSelectedAnimal("");
+            else if(event.equals("start clicked")) {
+                this.engine.clearAnimalsToHighlight();
                 this.engine.run();
             }
-        }
+            else if(event.equals("highlight clicked")) {
+                if(this.engine.isTimerStopped()) {
+                    this.engine.animalSelectedUnselected();
+                    this.followedAnimalStatsPanel.setVoidAnimalStats();
 
-        if(sender instanceof RenderPanel && event == "animal selected") {
-            if(this.engine.isTimerStopped()) {
-                this.followedAnimalPanel.showSelectedAnimal(this.renderPanel.selectedAnimal.getGenotype());
+                    this.engine.setAnimalsToHighlight();
+                    this.renderMapPanel.repaint();
+                }
+            }
+            else if(event.equals("unselect clicked")) {
+                this.engine.animalSelectedUnselected();
+                this.followedAnimalStatsPanel.setVoidAnimalStats();
+                this.renderMapPanel.repaint();
+            }
+        }
+        else if(sender instanceof RenderMapPanel) {
+            if(event.equals("animal will be selected")) {
+                this.engine.clearAnimalsToHighlight();
+                this.engine.animalSelectedUnselected();
+            }
+            else if(event.equals("animal selected")) {
+                this.engine.animalPicked();
+                this.followedAnimalStatsPanel.updateAnimalStats(this.engine.countDescendants());
             }
         }
     }
+
+    @Override public void windowClosing(WindowEvent e) {
+        this.engine.stopTimer();
+        this.engine.saveStatsToFile();
+    }
+    @Override public void windowOpened(WindowEvent e) {}
+    @Override public void windowClosed(WindowEvent e) {}
+    @Override public void windowIconified(WindowEvent e) {}
+    @Override public void windowDeiconified(WindowEvent e) {}
+    @Override public void windowActivated(WindowEvent e) {}
+    @Override public void windowDeactivated(WindowEvent e) {}
 }

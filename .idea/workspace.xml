@@ -2,18 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7f960795-f95d-49c2-8708-619a5cf0a046" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/evolution/ButtonsPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/evolution/FollowedAnimalPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/evolution/IMediate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/evolution/FollowedAnimalStatsPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/Animal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/ButtonsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/ButtonsPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/DataInputWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/DataInputWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/FollowedAnimalPanel.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/Genotype.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/Genotype.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/MapRender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/RenderPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/MapStatistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/StatisticsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/RectangularBiomesMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/RectangularBiomesMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/RenderPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/RenderMapPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/SimulationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/SimulationEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/SimulationWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/SimulationWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/Statistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/Statistics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/StatisticsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/StatisticsPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +24,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
