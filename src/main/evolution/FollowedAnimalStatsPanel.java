@@ -5,12 +5,14 @@ import java.awt.*;
 
 public class FollowedAnimalStatsPanel extends JPanel {
     private SimulationEngine engine;
+    private SelectedAnimal selectedAnimal;
 
     private JLabel panelTitleLabel;
     private JLabel[] statisticsLabels;
 
-    public FollowedAnimalStatsPanel(SimulationEngine engine) {
+    public FollowedAnimalStatsPanel(SimulationEngine engine, SelectedAnimal selectedAnimal) {
         this.engine = engine;
+        this.selectedAnimal = selectedAnimal;
 
         this.setLabels();
         this.setVoidAnimalStats();
@@ -84,23 +86,39 @@ public class FollowedAnimalStatsPanel extends JPanel {
         this.statisticsLabels[13].setSize(50, 50);
     }
 
-    public void updateAnimalStats(int numberOfDescendants) {
-        if(this.engine.animalSelected.getEnergy() == 0) {
+    public void updateAnimalStats() {
+//        if(this.engine.animalSelected.getEnergy() == 0) {
+//            this.statisticsLabels[0].setText("Dead day: ");
+//            this.statisticsLabels[7].setText(String.valueOf(this.engine.dayWhenDead));
+//        }
+//        else {
+//            this.statisticsLabels[0].setText("Energy: ");
+//            this.statisticsLabels[7].setText(String.valueOf(this.engine.animalSelected.getEnergy()));
+//        }
+//
+//        this.statisticsLabels[8].setText(String.valueOf(this.engine.animalSelected.getLivedDays()));
+//        this.statisticsLabels[9].setText(String.valueOf(this.engine.animalSelected.getNumberOfChildren()));
+//        this.statisticsLabels[10].setText(String.valueOf(this.engine.animalSelected.getGenotype()));
+//
+//        this.statisticsLabels[11].setText(String.valueOf(this.engine.dayWhenPicked));
+//        this.statisticsLabels[12].setText(String.valueOf(this.engine.animalSelected.getNumberOfChildren() - this.engine.numberOfChildrenWhenPicked));
+//        this.statisticsLabels[13].setText(String.valueOf(this.engine.numberOfDescendants));
+        if(this.selectedAnimal.animal.getEnergy() == 0) {
             this.statisticsLabels[0].setText("Dead day: ");
-            this.statisticsLabels[7].setText(String.valueOf(this.engine.dayWhenDead));
+            this.statisticsLabels[7].setText(String.valueOf(this.selectedAnimal.dayWhenDead));
         }
         else {
             this.statisticsLabels[0].setText("Energy: ");
-            this.statisticsLabels[7].setText(String.valueOf(this.engine.animalSelected.getEnergy()));
+            this.statisticsLabels[7].setText(String.valueOf(this.selectedAnimal.animal.getEnergy()));
         }
 
-        this.statisticsLabels[8].setText(String.valueOf(this.engine.animalSelected.getLivedDays()));
-        this.statisticsLabels[9].setText(String.valueOf(this.engine.animalSelected.getNumberOfChildren()));
-        this.statisticsLabels[10].setText(String.valueOf(this.engine.animalSelected.getGenotype()));
+        this.statisticsLabels[8].setText(String.valueOf(this.selectedAnimal.animal.getLivedDays()));
+        this.statisticsLabels[9].setText(String.valueOf(this.selectedAnimal.animal.getNumberOfChildren()));
+        this.statisticsLabels[10].setText(String.valueOf(this.selectedAnimal.animal.getGenotype()));
 
-        this.statisticsLabels[11].setText(String.valueOf(this.engine.dayWhenPicked));
-        this.statisticsLabels[12].setText(String.valueOf(this.engine.animalSelected.getNumberOfChildren() - this.engine.numberOfChildrenWhenPicked));
-        this.statisticsLabels[13].setText(String.valueOf(numberOfDescendants));
+        this.statisticsLabels[11].setText(String.valueOf(this.selectedAnimal.dayWhenPicked));
+        this.statisticsLabels[12].setText(String.valueOf(this.selectedAnimal.animal.getNumberOfChildren() - this.selectedAnimal.numberOfChildrenWhenPicked));
+        this.statisticsLabels[13].setText(String.valueOf(this.selectedAnimal.numberOfDescendants));
     }
 
     public void setVoidAnimalStats() {

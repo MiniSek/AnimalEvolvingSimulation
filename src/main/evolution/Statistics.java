@@ -122,20 +122,19 @@ public class Statistics {
         int bestCount = 0;
         int count = 1;
         String bestString = "";
-        for(int i = 0; i < animalsSortedByGenotype.size(); i++) {
-            if(animalsSortedByGenotype.get(i).getGenotype().equals(previous))
+        for(Animal animal : animalsSortedByGenotype) {
+            if(animal.getGenotype().equals(previous))
                 count++;
             else
                 count = 1;
 
             if(count > bestCount) {
                 bestCount = count;
-                bestString = animalsSortedByGenotype.get(i).getGenotype();
+                bestString = animal.getGenotype();
             }
-            previous = animalsSortedByGenotype.get(i).getGenotype();
+            previous = animal.getGenotype();
         }
 
-        //check it
         //change most common genotype only if is not as numerous as current one
         if(bestCount != this.numberOfMostCommonGenotype) {
             this.mostCommonGenotype = bestString;

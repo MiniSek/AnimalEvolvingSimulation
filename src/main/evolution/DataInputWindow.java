@@ -32,6 +32,8 @@ public class DataInputWindow extends JPanel implements ActionListener {
         this.startSimulation.setBackground(Color.green);
         this.startSimulation.addActionListener(this);
 
+        ImageIcon logoIcon = new ImageIcon("images\\lew.jpg");
+
         this.inputWindow = new JFrame();
         this.inputWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.inputWindow.getContentPane().add(this);
@@ -39,6 +41,7 @@ public class DataInputWindow extends JPanel implements ActionListener {
         this.inputWindow.setLayout(null);
         this.inputWindow.setResizable(false);
         this.inputWindow.setLocationByPlatform(true);
+        this.inputWindow.setIconImage(logoIcon.getImage());
 
         this.setLayout(null);
         this.add(this.startSimulation);

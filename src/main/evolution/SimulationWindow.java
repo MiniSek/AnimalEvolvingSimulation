@@ -8,6 +8,7 @@ import java.awt.event.WindowListener;
 public class SimulationWindow extends JPanel implements IMediate, WindowListener {
     private final JFrame frame;
     private final SimulationEngine engine;
+    private SelectedAnimal selectedAnimal;
 
     private final RenderMapPanel renderMapPanel;
     private final StatisticsPanel statisticsPanel;
@@ -17,22 +18,26 @@ public class SimulationWindow extends JPanel implements IMediate, WindowListener
     private final int windowWidth = 1400;
     private final int windowHeight = 760;
 
-    public SimulationWindow(SimulationEngine engine, RectangularBiomesMap map, int width, int height, int animalsStartEnergy) {
+    public SimulationWindow(SimulationEngine engine, RectangularBiomesMap map, int width, int height, int animalsStartEnergy, SelectedAnimal selectedAnimal) {
         this.engine = engine;
-        this.renderMapPanel = new RenderMapPanel(this, engine, map, width, height, animalsStartEnergy);
+        this.selectedAnimal = selectedAnimal;
+
+        this.renderMapPanel = new RenderMapPanel(this, engine, map, selectedAnimal, width, height, animalsStartEnergy);
         this.renderMapPanel.setSize(new Dimension(1, 1));
 
         this.buttonsPanel = new ButtonsPanel(this, engine);
         this.buttonsPanel.setLocation(0, 660);
         this.buttonsPanel.setSize(600, 100);
 
-        this.followedAnimalStatsPanel = new FollowedAnimalStatsPanel(engine);
+        this.followedAnimalStatsPanel = new FollowedAnimalStatsPanel(engine, selectedAnimal);
         this.followedAnimalStatsPanel.setLocation(0, 400);
         this.followedAnimalStatsPanel.setSize(600, 260);
 
         this.statisticsPanel = new StatisticsPanel(map);
         this.statisticsPanel.setLocation(0,0);
         this.statisticsPanel.setSize(600, 400);
+
+        ImageIcon logoIcon = new ImageIcon("images\\lew.jpg");
 
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -41,8 +46,8 @@ public class SimulationWindow extends JPanel implements IMediate, WindowListener
         frame.pack();
         frame.setLocationByPlatform(true);
         frame.setLayout(null);
-
         frame.addWindowListener(this);
+        frame.setIconImage(logoIcon.getImage());
 
         this.setLayout(null);
 
@@ -61,8 +66,10 @@ public class SimulationWindow extends JPanel implements IMediate, WindowListener
     public void update() {
         this.renderMapPanel.repaint();
         this.statisticsPanel.updateStatistics();
-        if(this.engine.animalSelected != null)
-            this.followedAnimalStatsPanel.updateAnimalStats(this.engine.countDescendants());
+//        if(this.engine.animalSelected != null)
+//            this.followedAnimalStatsPanel.updateAnimalStats();
+        if(!this.selectedAnimal.isNull())
+            this.followedAnimalStatsPanel.updateAnimalStats();
     }
 
     public void notifyMediator(Object sender, String event) {
@@ -76,7 +83,8 @@ public class SimulationWindow extends JPanel implements IMediate, WindowListener
             }
             else if(event.equals("highlight clicked")) {
                 if(this.engine.isTimerStopped()) {
-                    this.engine.animalSelectedUnselected();
+//                    this.engine.animalSelectedUnselected();
+                    this.selectedAnimal.animalSelectedUnselected();
                     this.followedAnimalStatsPanel.setVoidAnimalStats();
 
                     this.engine.setAnimalsToHighlight();
@@ -84,7 +92,8 @@ public class SimulationWindow extends JPanel implements IMediate, WindowListener
                 }
             }
             else if(event.equals("unselect clicked")) {
-                this.engine.animalSelectedUnselected();
+//                this.engine.animalSelectedUnselected();
+                this.selectedAnimal.animalSelectedUnselected();
                 this.followedAnimalStatsPanel.setVoidAnimalStats();
                 this.renderMapPanel.repaint();
             }
@@ -92,11 +101,13 @@ public class SimulationWindow extends JPanel implements IMediate, WindowListener
         else if(sender instanceof RenderMapPanel) {
             if(event.equals("animal will be selected")) {
                 this.engine.clearAnimalsToHighlight();
-                this.engine.animalSelectedUnselected();
+//                this.engine.animalSelectedUnselected();
+                this.selectedAnimal.animalSelectedUnselected();
             }
             else if(event.equals("animal selected")) {
-                this.engine.animalPicked();
-                this.followedAnimalStatsPanel.updateAnimalStats(this.engine.countDescendants());
+//                this.engine.animalPicked();
+                this.selectedAnimal.animalPicked();
+                this.followedAnimalStatsPanel.updateAnimalStats();
             }
         }
     }

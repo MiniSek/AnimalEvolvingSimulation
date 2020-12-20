@@ -17,19 +17,31 @@ public class SimulationEngine implements ActionListener, IEngine, IAnimalsBehavi
 
     private final ArrayList<Animal> animalsToHighlight = new ArrayList<>();
 
-    public Animal animalSelected;
-    public int numberOfChildrenWhenPicked;
-    public int dayWhenPicked;
-    public int dayWhenDead;
-
     private final int animalMoveEnergy;
     private final int grassEnergy;
     private final int animalStartEnergy;
 
+    private SelectedAnimal selectedAnimal;
+//    public Animal animalSelected;
+//    public int numberOfChildrenWhenPicked;
+//    public int dayWhenPicked;
+//    public int dayWhenDead;
+//    public int numberOfDescendants;
+
+    private final SimulationWindow simulationWindow;
+
     private final Timer timer;
     private boolean stopTime;
 
-    private final SimulationWindow simulationWindow;
+    /*
+    animals arraylist is passed to other class
+    selected animal is public
+    add some exceptions
+    most common genotype in statistics is wrong probably
+    add json file in input_parameters file
+    watch animal selected variables
+     */
+
 
     public SimulationEngine(int width, int height, int animalStartEnergy, int animalMoveEnergy, int grassEnergy,
                             double jungleRatio, int numberOfAnimalsAtStart) {
@@ -40,9 +52,17 @@ public class SimulationEngine implements ActionListener, IEngine, IAnimalsBehavi
         this.grassEnergy = grassEnergy;
         this.animalStartEnergy = animalStartEnergy;
 
-        this.distributeAnimals(width, height, numberOfAnimalsAtStart, animalStartEnergy);
+//        this.animalSelected = null;
+//        this.numberOfChildrenWhenPicked = 0;
+//        this.dayWhenPicked = 0;
+//        this.dayWhenDead = 0;
+//        this.numberOfDescendants = 0;
 
-        this.simulationWindow = new SimulationWindow(this, this.map, width, height, animalStartEnergy);
+        this.simulationWindow = new SimulationWindow(this, this.map, width, height, animalStartEnergy, selectedAnimal);
+
+        this.selectedAnimal = new SelectedAnimal(this.map.statistics, this, this.simulationWindow, this.map);
+
+        this.distributeAnimals(width, height, numberOfAnimalsAtStart, animalStartEnergy);
 
         this.timer = new Timer(100, this);
         this.stopTime = false;
@@ -107,34 +127,32 @@ public class SimulationEngine implements ActionListener, IEngine, IAnimalsBehavi
                 this.animalsToHighlight.add(animal);
     }
 
-    public void animalPicked() {
-        this.dayWhenPicked = this.map.statistics.numberOfDay;
-        this.numberOfChildrenWhenPicked = this.animalSelected.getNumberOfChildren();
-        this.animalSelected.turnOnMarker();
-    }
+//    public void animalPicked() {
+//        this.dayWhenPicked = this.map.statistics.numberOfDay;
+//        this.numberOfChildrenWhenPicked = this.animalSelected.getNumberOfChildren();
+//        this.animalSelected.turnOnMarker();
+//    }
+//
+//    public void animalSelectedDied() {
+//        this.dayWhenDead = this.map.statistics.numberOfDay;
+//        this.simulationWindow.update();
+//        this.animalSelected = null;
+//        for(Animal animal : this.animals)
+//            animal.turnOffMarker();
+//        this.numberOfDescendants = 0;
+//    }
+//
+//    public void animalSelectedUnselected() {
+//        this.animalSelected = null;
+//        for(Animal animal : this.animals)
+//            animal.turnOffMarker();
+//        this.numberOfDescendants = 0;
+//    }
 
-    public void animalSelectedDied() {
-        this.dayWhenDead = this.map.statistics.numberOfDay;
-        this.simulationWindow.update();
-        this.animalSelected = null;
+    public void turnOffMarkers() {
         for(Animal animal : this.animals)
             animal.turnOffMarker();
     }
-
-    public void animalSelectedUnselected() {
-        this.animalSelected = null;
-        for(Animal animal : this.animals)
-            animal.turnOffMarker();
-    }
-
-    public int countDescendants() {
-        int numberOfDescendants = -1;
-        for(Animal animal : this.animals)
-            if(animal.marked())
-                numberOfDescendants++;
-        return Math.max(numberOfDescendants, 0);
-    }
-
 
     public void saveStatsToFile() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
@@ -180,8 +198,8 @@ public class SimulationEngine implements ActionListener, IEngine, IAnimalsBehavi
     private void deleteDeadAnimals() {
         for(Animal animal : this.animalsToDelete) {
             this.animals.remove(animal);
-            if(animal.equals(this.animalSelected))
-                this.animalSelectedDied();
+//            if(animal.equals(this.animalSelected))
+//                this.animalSelectedDied();
         }
         this.animalsToDelete.clear();
     }
@@ -210,6 +228,8 @@ public class SimulationEngine implements ActionListener, IEngine, IAnimalsBehavi
 
     public void animalCreated(Animal animal) {
         this.animals.add(animal);
+//        if(animal.marked())
+//            this.numberOfDescendants++;
     }
 
     public void animalDied(Animal animal) {

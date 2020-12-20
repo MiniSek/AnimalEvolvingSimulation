@@ -10,6 +10,7 @@ public class RenderMapPanel extends JPanel implements MouseListener {
     private final IMediate mediator;
     private final SimulationEngine engine;
     private final RectangularBiomesMap map;
+    private SelectedAnimal selectedAnimal;
 
     private final int squareSide;
     private final int panelWidth;
@@ -19,10 +20,11 @@ public class RenderMapPanel extends JPanel implements MouseListener {
 
     private final int animalsStartEnergy;
 
-    public RenderMapPanel(IMediate mediator, SimulationEngine engine, RectangularBiomesMap map, int width, int height, int animalsStartEnergy) {
+    public RenderMapPanel(IMediate mediator, SimulationEngine engine, RectangularBiomesMap map, SelectedAnimal selectedAnimal, int width, int height, int animalsStartEnergy) {
         this.mediator = mediator;
         this.engine = engine;
         this.map = map;
+        this.selectedAnimal = selectedAnimal;
 
         this.rowsNumber = width;
         this.columnsNumber = height;
@@ -80,9 +82,13 @@ public class RenderMapPanel extends JPanel implements MouseListener {
             }
 
         //color selected animal
-        if(this.engine.animalSelected != null) {
+//        if(this.engine.animalSelected != null) {
+//            g.setColor(Color.blue);
+//            g.fillRect(2 + this.engine.animalSelected.getPosition().x * this.squareSide, 2 + this.engine.animalSelected.getPosition().y * this.squareSide, this.squareSide, this.squareSide);
+//        }
+        if(!this.selectedAnimal.isNull()) {
             g.setColor(Color.blue);
-            g.fillRect(2 + this.engine.animalSelected.getPosition().x * this.squareSide, 2 + this.engine.animalSelected.getPosition().y * this.squareSide, this.squareSide, this.squareSide);
+            g.fillRect(2 + this.selectedAnimal.animal.getPosition().x * this.squareSide, 2 + this.selectedAnimal.animal.getPosition().y * this.squareSide, this.squareSide, this.squareSide);
         }
 
         //color borders
@@ -99,7 +105,8 @@ public class RenderMapPanel extends JPanel implements MouseListener {
             Object object = this.map.objectAt(position);
             if (object instanceof  Animal) {
                 this.mediator.notifyMediator(this, "animal will be selected");
-                this.engine.animalSelected = (Animal)object;
+//                this.engine.animalSelected = (Animal)object;
+                this.selectedAnimal.setAnimal((Animal)object);
                 this.mediator.notifyMediator(this, "animal selected");
                 this.repaint();
             }
