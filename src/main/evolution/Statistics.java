@@ -65,6 +65,12 @@ public class Statistics {
         this.dayNumberWhenFirstAnimalDead = -1;
     }
 
+    static class SortByGenotype implements Comparator<Animal> {
+        public int compare(Animal first, Animal second) {
+            return first.getGenotype().compareTo(second.getGenotype());
+        }
+    }
+
     public void updateStatistics(ArrayList<Animal> animals) {
         int energySum = 0;
         int childrenSum = 0;
@@ -114,12 +120,6 @@ public class Statistics {
 
         for(Animal animal : animals)
             this.updateNumberOfEachGenotypeInTotal(animal);
-    }
-
-    class SortByGenotype implements Comparator<Animal> {
-        public int compare(Animal first, Animal second) {
-            return first.getGenotype().compareTo(second.getGenotype());
-        }
     }
 
    private void mostCommonGenotype(ArrayList<Animal> animalsSortedByGenotype) {

@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class FollowedAnimalStatsPanel extends JPanel implements IAnimalsBehaviourOnMapObserver {
-    private IMediate mediator;
+    private final IMediate mediator;
 
     private JLabel panelTitleLabel;
     private JLabel[] statisticsLabels;
@@ -38,7 +38,7 @@ public class FollowedAnimalStatsPanel extends JPanel implements IAnimalsBehaviou
             this.setVoidAnimalStats();
         else {
             this.selectedAnimal.turnOnMarker();
-//            this.dayWhenAnimalPicked =; //set outside
+//            this.dayWhenAnimalPicked =; //is set outside
             this.dayWhenAnimalDied = -1;
             this.numberOfAnimalDescendants = -1;
             this.numberOfChildrenWhenAnimalPicked = this.selectedAnimal.getNumberOfChildren();

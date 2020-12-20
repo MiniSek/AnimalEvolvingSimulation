@@ -7,7 +7,7 @@ import java.util.Random;
 import static java.lang.Math.abs;
 
 public class AnimalsHerd implements IAnimalsHerd{
-    private RectangularBiomesMap map;
+    private final RectangularBiomesMap map;
 
     private final ArrayList<Animal> animalsAtPosition = new ArrayList<>();
 

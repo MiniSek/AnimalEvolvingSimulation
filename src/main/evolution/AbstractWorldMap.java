@@ -43,12 +43,4 @@ public abstract class AbstractWorldMap implements IWorldMap, IAnimalPositionChan
     public Object objectAt(Vector2d position) {
         return this.animals.get(position);
     }
-
-//    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
-//        Animal animalToRelocate = this.animals.get(oldPosition);
-//        if(animalToRelocate.getPosition().equals(newPosition)) {
-//            this.animals.remove(oldPosition);
-//            this.animals.put(newPosition, animalToRelocate);
-//        }
-//    }
 }

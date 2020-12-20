@@ -4,13 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StatisticsPanel extends JPanel {
-    private RectangularBiomesMap map;
+    private final RectangularBiomesMap map;
 
-    private JLabel title;
-    private JLabel[] statisticsLabel;
+    private final JLabel panelTitle;
+    private final JLabel[] statisticsLabel;
 
-    private int stringLength;
-    private int stringHeight;
+    private final int stringLength;
+    private final int stringHeight;
 
     public StatisticsPanel(RectangularBiomesMap map) {
         this.map = map;
@@ -27,13 +27,13 @@ public class StatisticsPanel extends JPanel {
             this.statisticsLabel[i].setFont(new Font("Calibri", Font.PLAIN, 20));
         }
 
-        this.title = new JLabel();
-        this.add(this.title);
-        this.title.setLocation(0,0);
-        this.title.setSize(600, 50);
-        this.title.setText("Animal stats");
-        this.title.setFont(new Font("Calibri", Font.PLAIN, 25));
-        this.title.setHorizontalAlignment(JLabel.CENTER);
+        this.panelTitle = new JLabel();
+        this.add(this.panelTitle);
+        this.panelTitle.setLocation(0,0);
+        this.panelTitle.setSize(600, 50);
+        this.panelTitle.setText("Animal stats");
+        this.panelTitle.setFont(new Font("Calibri", Font.PLAIN, 25));
+        this.panelTitle.setHorizontalAlignment(JLabel.CENTER);
 
         this.statisticsLabel[0].setBounds(30, 60, this.stringLength, this.stringHeight);
         this.statisticsLabel[0].setText("After day: ");

@@ -10,9 +10,9 @@ public enum MapDirection {
     WEST(new Vector2d(-1,0)),
     NORTHWEST(new Vector2d(-1,1));
 
-    private Vector2d unitVector;
+    private final Vector2d unitVector;
 
-    private MapDirection(Vector2d unitVector) {
+    MapDirection(Vector2d unitVector) {
         this.unitVector = unitVector;
     }
 

@@ -34,11 +34,9 @@ public class MapCoordinates {
         Vector2d positionPrecedingRightUpperCorner = new Vector2d(position.x % (this.rightUpperCorner.x + 1),
                 position.y % (this.rightUpperCorner.y + 1));
 
-        Vector2d positionInMap = new Vector2d((positionPrecedingRightUpperCorner.x + this.rightUpperCorner.x + 1) %
+        return new Vector2d((positionPrecedingRightUpperCorner.x + this.rightUpperCorner.x + 1) %
                 (this.rightUpperCorner.x + 1), (positionPrecedingRightUpperCorner.y + this.rightUpperCorner.y + 1) %
                 (this.rightUpperCorner.y + 1));
-
-        return positionInMap;
     }
 
     public boolean isPositionInJungle(Vector2d position) {
@@ -56,7 +54,6 @@ public class MapCoordinates {
     }
 
     //what have i done
-    //it should be simplified
     public Vector2d drawPositionInSavanna() {
         Random generator = new Random();
         int numberOfPossiblePositionsInSavanna = this.width * this.height - this.jungleWidth * this.jungleHeight;

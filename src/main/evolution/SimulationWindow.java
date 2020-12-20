@@ -6,8 +6,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 public class SimulationWindow extends JPanel implements IMediate, WindowListener {
-    private final JFrame frame;
-
     private final SimulationEngine engine;
 
     private final RenderMapPanel renderMapPanel;
@@ -39,7 +37,7 @@ public class SimulationWindow extends JPanel implements IMediate, WindowListener
 
         ImageIcon logoIcon = new ImageIcon("images\\lew.jpg");
 
-        frame = new JFrame();
+        JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setResizable(false);
         frame.getContentPane().add(this);
@@ -78,29 +76,28 @@ public class SimulationWindow extends JPanel implements IMediate, WindowListener
                 this.renderMapPanel.hideAnimalsToHighlight();
                 this.engine.run();
             }
-            else if(event.equals("highlight clicked")) {
-                if(this.engine.isTimerStopped()) {
+             else if(event.equals("highlight clicked")) {
+                    if(this.engine.isTimerStopped()) {
                     this.renderMapPanel.hideSelectedAnimal();
                     this.renderMapPanel.showAnimalsToHighlight();
 
                     this.renderMapPanel.setAnimalsToHighlight(this.engine.getAnimalsToHighlight());
                     this.followedAnimalStatsPanel.animalPicked(null);
                     this.engine.turnOffMarkers(); //turnOff always after unselecting animal (when selected markers are turned off)
+                     this.renderMapPanel.repaint();
+                 }
+             }
+             else if(event.equals("unselect clicked")) {
+                 this.renderMapPanel.hideSelectedAnimal();
 
-                    this.renderMapPanel.repaint();
-                }
-            }
-            else if(event.equals("unselect clicked")) {
-                this.renderMapPanel.hideSelectedAnimal();
+                 this.followedAnimalStatsPanel.animalPicked(null);
+                 this.engine.turnOffMarkers();
 
-                this.followedAnimalStatsPanel.animalPicked(null);
-                this.engine.turnOffMarkers();
-
-                this.renderMapPanel.repaint();
-            }
-            else if(event.equals("set delay")) {
-                this.engine.setDelay(this.buttonsPanel.getDelay());
-            }
+                 this.renderMapPanel.repaint();
+             }
+             else if(event.equals("set delay")) {
+                 this.engine.setDelay(this.buttonsPanel.getDelay());
+             }
         }
         else if(sender instanceof RenderMapPanel) {
             if(event.equals("animal selected")) {

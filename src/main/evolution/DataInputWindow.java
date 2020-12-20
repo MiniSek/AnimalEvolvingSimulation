@@ -6,8 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class DataInputWindow extends JPanel implements ActionListener {
-    private JFrame inputWindow;
-    private JButton startSimulation;
+    private final JButton startSimulation;
 
     private JLabel mapWidthLabel;
     private JLabel mapHeightLabel;
@@ -34,14 +33,14 @@ public class DataInputWindow extends JPanel implements ActionListener {
 
         ImageIcon logoIcon = new ImageIcon("images\\lew.jpg");
 
-        this.inputWindow = new JFrame();
-        this.inputWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.inputWindow.getContentPane().add(this);
-        this.inputWindow.pack();
-        this.inputWindow.setLayout(null);
-        this.inputWindow.setResizable(false);
-        this.inputWindow.setLocationByPlatform(true);
-        this.inputWindow.setIconImage(logoIcon.getImage());
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(this);
+        frame.pack();
+        frame.setLayout(null);
+        frame.setResizable(false);
+        frame.setLocationByPlatform(true);
+        frame.setIconImage(logoIcon.getImage());
 
         this.setLayout(null);
         this.add(this.startSimulation);
@@ -49,7 +48,7 @@ public class DataInputWindow extends JPanel implements ActionListener {
         this.setLabels();
         this.setTextFields(width, height, jungleRatio, numberOfAnimals, startEnergy, moveEnergy, grassEnergy);
 
-        this.inputWindow.setVisible(true);
+        frame.setVisible(true);
     }
 
     @Override public Dimension getPreferredSize() {

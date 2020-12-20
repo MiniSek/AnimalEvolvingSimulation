@@ -65,7 +65,7 @@ public class RenderMapPanel extends JPanel implements MouseListener {
                 Vector2d position = new Vector2d(i, j);
                 if(this.map.isOccupied(position)) {
                     Object object = this.map.objectAt(position);
-                    if(object instanceof  Animal) {
+                    if(object instanceof Animal) {
                         g.setColor(this.getColor((Animal) object));
                         g.fillRect(2 + i * this.squareSide, 2 + j * this.squareSide, this.squareSide, this.squareSide);
                     }

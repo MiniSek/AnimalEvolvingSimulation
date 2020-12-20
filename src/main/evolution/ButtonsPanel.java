@@ -6,16 +6,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ButtonsPanel extends JPanel implements ActionListener {
-    private IMediate mediator;
+    private final IMediate mediator;
 
-    private JButton stopButton;
-    private JButton startButton;
-    private JButton highlightMostCommonGenesButton;
-    private JButton unselectAnimalButton;
-    private JButton setDelayButton;
+    private final JButton stopButton;
+    private final JButton startButton;
+    private final JButton highlightMostCommonGenesButton;
+    private final JButton unselectAnimalButton;
+    private final JButton setDelayButton;
 
-    private JTextField delayTextField;
-    private JLabel delayLabel;
+    private final JTextField delayTextField;
+    private final JLabel delayLabel;
 
     public ButtonsPanel(IMediate mediator) {
         this.mediator = mediator;

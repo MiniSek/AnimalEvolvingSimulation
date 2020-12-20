@@ -20,11 +20,6 @@ public class SimulationEngine implements ActionListener, IAnimalsBehaviourOnMapO
     private final Timer timer;
     private boolean stopTime;
 
-    /*
-    add some exceptions
-    most common genotype in statistics is wrong probably
-    */
-
     public SimulationEngine(int width, int height, int animalStartEnergy, int animalMoveEnergy, int grassEnergy,
                             double jungleRatio, int numberOfAnimalsAtStart) {
         this.map = new RectangularBiomesMap(width, height, jungleRatio, numberOfAnimalsAtStart);

@@ -38,7 +38,7 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
 
     //it's not needed but can stay
     public String toString() {
-        switch (this.direction) {
+        switch(this.direction) {
             case NORTH:
                 return "8";
             case NORTHEAST:
@@ -97,8 +97,7 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
     //for animal map is endless so map should be careful and update location of animal if it is abroad
     public void move(int animalMoveEnergy) {
         Vector2d oldLocation = this.location;
-        Vector2d possibleNewLocation = this.location.add(this.direction.toUnitVector());
-        this.location = possibleNewLocation;
+        this.location = this.location.add(this.direction.toUnitVector());
         this.energy -= animalMoveEnergy;
         this.livedDays += 1;
         this.positionChangedInformObservers(oldLocation);
@@ -118,7 +117,6 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
     }
 
     private int giveEnergyToChildAnimal() {
-        //should this line be here?
         this.numberOfChildren += 1;
 
         int energyForChildAnimal = this.energy/4;
