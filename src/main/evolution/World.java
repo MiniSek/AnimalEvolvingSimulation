@@ -1,25 +1,40 @@
 package evolution;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class World {
     public static void main(String[] args) {
-        new DataInputWindow();
-//        try {
-//            int width = 50, height = 50, animalStartEnergy = 50, moveEnergy = 1, plantEnergy = 40;
-//            double jungleRatio = 0.3;
-//            int numberOfAnimals = 40;
-//            IEngine engine;
-//            for (int i = 0; i < 1; i++) {
-//                engine = new SimulationEngine(width, height, animalStartEnergy, moveEnergy, plantEnergy, jungleRatio, numberOfAnimals);
-//                engine.run();
-//                System.out.print("It was simulation number: ");
-//                System.out.println(i + 1);
-//                Thread.sleep(5000);
-//            }
-//        }
-//        catch(InterruptedException ex) {
-//            System.out.println(ex);
-//            System.exit(0);
-//        }
+
+        JSONParser jsonParser = new JSONParser();
+
+        try(FileReader reader = new FileReader("input_parameters\\parameters.json")) {
+            Object obj = jsonParser.parse(reader);
+
+            JSONArray parametersObjectsList = (JSONArray)obj;
+
+            for(Object parametersObject : parametersObjectsList) {
+                JSONObject parameters = (JSONObject)((JSONObject)parametersObject).get("parameters");
+                String[] data = {(String)parameters.get("width"), (String)parameters.get("height"), (String)parameters.get("jungle ratio"),
+                        (String)parameters.get("number of animals at start"), (String)parameters.get("animals start energy"),
+                        (String)parameters.get("animals move energy"), (String)parameters.get("grass energy")};
+
+                new DataInputWindow(data[0], data[1], data[2], data[3], data[4], data[5], data[6]);
+            }
+
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
+        } catch(ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
 

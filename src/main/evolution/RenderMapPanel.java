@@ -8,9 +8,12 @@ import java.util.ArrayList;
 
 public class RenderMapPanel extends JPanel implements MouseListener {
     private final IMediate mediator;
-    private final SimulationEngine engine;
     private final RectangularBiomesMap map;
-    private SelectedAnimal selectedAnimal;
+
+    private boolean animalsToHighlightVisible;
+    private ArrayList<Animal> animalsToHighlight = new ArrayList<>();
+    private boolean selectedAnimalVisible;
+    private Animal selectedAnimal;
 
     private final int squareSide;
     private final int panelWidth;
@@ -20,11 +23,13 @@ public class RenderMapPanel extends JPanel implements MouseListener {
 
     private final int animalsStartEnergy;
 
-    public RenderMapPanel(IMediate mediator, SimulationEngine engine, RectangularBiomesMap map, SelectedAnimal selectedAnimal, int width, int height, int animalsStartEnergy) {
+    public RenderMapPanel(IMediate mediator, RectangularBiomesMap map, int width, int height, int animalsStartEnergy) {
         this.mediator = mediator;
-        this.engine = engine;
         this.map = map;
-        this.selectedAnimal = selectedAnimal;
+
+        this.animalsToHighlightVisible = false;
+        this.selectedAnimalVisible = false;
+        this.selectedAnimal = null;
 
         this.rowsNumber = width;
         this.columnsNumber = height;
@@ -73,8 +78,7 @@ public class RenderMapPanel extends JPanel implements MouseListener {
         }
 
         //color highlighted animals
-        ArrayList<Animal> animalsToHighlight = this.engine.getAnimalsToHighlight();
-        if(animalsToHighlight != null)
+        if(this.animalsToHighlightVisible)
             for(Animal animal : animalsToHighlight) {
                 Vector2d position = new Vector2d(animal.getPosition().x, animal.getPosition().y);
                 g.setColor(Color.blue);
@@ -82,13 +86,9 @@ public class RenderMapPanel extends JPanel implements MouseListener {
             }
 
         //color selected animal
-//        if(this.engine.animalSelected != null) {
-//            g.setColor(Color.blue);
-//            g.fillRect(2 + this.engine.animalSelected.getPosition().x * this.squareSide, 2 + this.engine.animalSelected.getPosition().y * this.squareSide, this.squareSide, this.squareSide);
-//        }
-        if(!this.selectedAnimal.isNull()) {
+        if(this.selectedAnimalVisible) {
             g.setColor(Color.blue);
-            g.fillRect(2 + this.selectedAnimal.animal.getPosition().x * this.squareSide, 2 + this.selectedAnimal.animal.getPosition().y * this.squareSide, this.squareSide, this.squareSide);
+            g.fillRect(2 + this.selectedAnimal.getPosition().x * this.squareSide, 2 + this.selectedAnimal.getPosition().y * this.squareSide, this.squareSide, this.squareSide);
         }
 
         //color borders
@@ -99,20 +99,41 @@ public class RenderMapPanel extends JPanel implements MouseListener {
         g.fillRect(0, this.panelHeight - 2, this.panelWidth, 2);
     }
 
+    public Animal getSelectedAnimal() {
+        return this.selectedAnimal;
+    }
+
+    public void setAnimalsToHighlight(ArrayList<Animal> animalsToHighlight) {
+        this.animalsToHighlight = animalsToHighlight;
+    }
+
+    public void hideAnimalsToHighlight() {
+        this.animalsToHighlightVisible = false;
+    }
+
+    public void showAnimalsToHighlight() {
+        this.animalsToHighlightVisible = true;
+    }
+
+    public void hideSelectedAnimal() {
+        this.selectedAnimalVisible = false;
+    }
+
+    public void showSelectedAnimal() {
+        this.selectedAnimalVisible = true;
+    }
+
     @Override public void mouseClicked(MouseEvent e) {
         Vector2d position = new Vector2d((e.getX() - 2)/this.squareSide, (e.getY() - 2)/this.squareSide);
         if(this.map.isOccupied(position)) {
             Object object = this.map.objectAt(position);
             if (object instanceof  Animal) {
-                this.mediator.notifyMediator(this, "animal will be selected");
-//                this.engine.animalSelected = (Animal)object;
-                this.selectedAnimal.setAnimal((Animal)object);
+                this.selectedAnimal = (Animal)object;
                 this.mediator.notifyMediator(this, "animal selected");
                 this.repaint();
             }
         }
     }
-
     @Override public void mousePressed(MouseEvent e) {}
     @Override public void mouseReleased(MouseEvent e) {}
     @Override public void mouseEntered(MouseEvent e) {}

@@ -5,8 +5,8 @@ import java.util.*;
 public class RectangularBiomesMap extends AbstractWorldMap{
     private final ArrayList<IAnimalsBehaviourOnMapObserver> observers = new ArrayList<>();
 
-    public final Statistics statistics;
     private final MapCoordinates coordinates;
+    public final Statistics statistics;
 
     private final Map<Vector2d, IAnimalsHerd> animals = new HashMap<>();
     private final ArrayList<Animal> animalsToAdd = new ArrayList<>();
@@ -18,8 +18,8 @@ public class RectangularBiomesMap extends AbstractWorldMap{
     public RectangularBiomesMap(int width, int height, double jungleRatio, int numberOfAnimalsAtStart) {
         super();
 
-        this.statistics = new Statistics(numberOfAnimalsAtStart);
         this.coordinates = new MapCoordinates(width, height, jungleRatio);
+        this.statistics = new Statistics(numberOfAnimalsAtStart);
 
         this.leftLowerCornerToDraw = this.coordinates.leftLowerCorner;
         this.rightUpperCornerToDraw = this.coordinates.rightUpperCorner;
@@ -114,6 +114,7 @@ public class RectangularBiomesMap extends AbstractWorldMap{
             this.place(animal);
 
         this.statistics.numberOfAnimals += this.animalsToAdd.size();
+
         this.animalsToAdd.clear();
     }
 
@@ -139,9 +140,9 @@ public class RectangularBiomesMap extends AbstractWorldMap{
     }
 
     //method which is called by animal to inform map about animal death
-    public void deleteAnimalsWithZeroEnergy() {
+    public void deleteAnimalsWithSmallAmountOfEnergy(int animalsMoveEnergy) {
         for(Vector2d position : this.animals.keySet()) {
-            this.animals.get(position).removeAnimalsWithZeroEnergy();
+            this.animals.get(position).removeAnimalsWithSmallAmountOfEnergy(animalsMoveEnergy);
             if(this.animals.get(position).sizeOfHerd() == 0)
                 this.positionOfHerdsToDelete.add(position);
         }

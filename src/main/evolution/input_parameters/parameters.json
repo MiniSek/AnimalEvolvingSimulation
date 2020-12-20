@@ -1,0 +1,13 @@
+[
+  {
+    "parameters": {
+      "width": "50",
+      "height": "50",
+      "jungle ratio": "0.3",
+      "number of animals at start": "60",
+      "animals start energy": "50",
+      "animals move energy": "1",
+      "grass energy": "40"
+    }
+  }
+]

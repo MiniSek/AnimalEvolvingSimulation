@@ -22,7 +22,7 @@ public class DataInputWindow extends JPanel implements ActionListener {
 
     private JTextField[] dataTextFields;
 
-    public DataInputWindow() {
+    public DataInputWindow(String width, String height, String jungleRatio, String numberOfAnimals, String startEnergy, String moveEnergy, String grassEnergy) {
         this.startSimulation = new JButton("Start simulations");
         this.startSimulation.setBounds(100, 420, 300, 40);
         this.startSimulation.setFont(new Font("Calibri", Font.PLAIN, 20));
@@ -47,7 +47,7 @@ public class DataInputWindow extends JPanel implements ActionListener {
         this.add(this.startSimulation);
 
         this.setLabels();
-        this.setTextFields();
+        this.setTextFields(width, height, jungleRatio, numberOfAnimals, startEnergy, moveEnergy, grassEnergy);
 
         this.inputWindow.setVisible(true);
     }
@@ -59,19 +59,9 @@ public class DataInputWindow extends JPanel implements ActionListener {
     @Override public void actionPerformed(ActionEvent e) {
         if(this.validateData()) {
             this.getData();
-            IEngine engine = new SimulationEngine(this.mapWidth, this.mapHeight, this.animalsStartEnergy, this.moveEnergy, this.grassEnergy, this.jungleRatio, this.animalsAtStart);
+            SimulationEngine engine = new SimulationEngine(this.mapWidth, this.mapHeight, this.animalsStartEnergy, this.moveEnergy, this.grassEnergy, this.jungleRatio, this.animalsAtStart);
             engine.run();
         }
-    }
-
-    private void getData() {
-        this.mapWidth = Integer.parseInt(this.dataTextFields[0].getText());
-        this.mapHeight = Integer.parseInt(this.dataTextFields[1].getText());
-        this.jungleRatio = Double.parseDouble(this.dataTextFields[2].getText());
-        this.animalsAtStart = Integer.parseInt(this.dataTextFields[3].getText());
-        this.animalsStartEnergy = Integer.parseInt(this.dataTextFields[4].getText());
-        this.moveEnergy = Integer.parseInt(this.dataTextFields[5].getText());
-        this.grassEnergy = Integer.parseInt(this.dataTextFields[6].getText());
     }
 
     private boolean validateData() {
@@ -113,6 +103,16 @@ public class DataInputWindow extends JPanel implements ActionListener {
         return true;
     }
 
+    private void getData() {
+        this.mapWidth = Integer.parseInt(this.dataTextFields[0].getText());
+        this.mapHeight = Integer.parseInt(this.dataTextFields[1].getText());
+        this.jungleRatio = Double.parseDouble(this.dataTextFields[2].getText());
+        this.animalsAtStart = Integer.parseInt(this.dataTextFields[3].getText());
+        this.animalsStartEnergy = Integer.parseInt(this.dataTextFields[4].getText());
+        this.moveEnergy = Integer.parseInt(this.dataTextFields[5].getText());
+        this.grassEnergy = Integer.parseInt(this.dataTextFields[6].getText());
+    }
+
     private void setLabels() {
         this.mapWidthLabel = new JLabel("Map width: ");
         this.mapWidthLabel.setBounds(70,40, 300, 30);
@@ -150,21 +150,21 @@ public class DataInputWindow extends JPanel implements ActionListener {
         this.add(this.grassEnergyLabel);
     }
 
-    private void setTextFields() {
+    private void setTextFields(String width, String height, String jungleRatio, String numberOfAnimals, String startEnergy, String moveEnergy, String grassEnergy) {
         this.dataTextFields = new JTextField[7];
 
         for(int i = 0; i < 7; i++) {
             this.dataTextFields[i] = new JTextField();
             this.dataTextFields[i].setBounds(370, 40 + i*50, 50, 30);
-            this.dataTextFields[i].setText("");
             this.add(this.dataTextFields[i]);
         }
-        this.dataTextFields[0].setText("50");
-        this.dataTextFields[1].setText("50");
-        this.dataTextFields[2].setText("0.3");
-        this.dataTextFields[3].setText("60");
-        this.dataTextFields[4].setText("50");
-        this.dataTextFields[5].setText("1");
-        this.dataTextFields[6].setText("40");
+
+        this.dataTextFields[0].setText(width);
+        this.dataTextFields[1].setText(height);
+        this.dataTextFields[2].setText(jungleRatio);
+        this.dataTextFields[3].setText(numberOfAnimals);
+        this.dataTextFields[4].setText(startEnergy);
+        this.dataTextFields[5].setText(moveEnergy);
+        this.dataTextFields[6].setText(grassEnergy);
     }
 }

@@ -1,5 +1,10 @@
 package evolution;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -99,7 +104,7 @@ public class Statistics {
         this.averageNumberOfChildrenPerLivingAnimalInTotal += this.averageNumberOfChildrenPerLivingAnimal;
     }
 
-    public void updateStatisticsAtStart(int animalsStartEnergy, ArrayList<Animal> animals) {
+    public void updateStatisticsAtStart(ArrayList<Animal> animals, int animalsStartEnergy) {
         this.averageEnergyPerLivingAnimal = animalsStartEnergy;
 
         Collections.sort(animals, new SortByGenotype());
@@ -149,5 +154,46 @@ public class Statistics {
                     this.numberOfEachGenotypeInTotal.get(animal.getGenotype()) + 1);
         else
             this.numberOfEachGenotypeInTotal.put(animal.getGenotype(), 1);
+    }
+
+    public void saveStatsToFile() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
+        String filePath = "output_stats\\" + LocalDateTime.now().format(formatter) + ".txt";
+        File myObj = new File(filePath);
+        try {
+            if(myObj.createNewFile()) {
+                FileWriter writer = new FileWriter(filePath);
+                writer.write("Number of days: " + this.numberOfDay + "\n");
+                writer.write("Average number of animals at map: " +
+                        Math.round((100.0*this.numberOfAnimalsInTotal)/this.numberOfDay)/100.0 + "\n");
+                writer.write("Average number of grasses at map: " +
+                        Math.round((100.0*this.numberOfGrassesInTotal)/this.numberOfDay)/100.0 + "\n");
+
+                int bestCount = 0;
+                String bestString = "";
+                for(String genotype : this.numberOfEachGenotypeInTotal.keySet()) {
+                    if(this.numberOfEachGenotypeInTotal.get(genotype) > bestCount) {
+                        bestCount = this.numberOfEachGenotypeInTotal.get(genotype);
+                        bestString = genotype;
+                    }
+                }
+                writer.write("Most common genotype in simulation: " + bestString + "\n");
+                writer.write("Number of most common genotype in simulation: " + bestCount + "\n");
+
+                writer.write("Average of average energy per living animal in simulation: " +
+                        Math.round((100.0*this.averageEnergyPerLivingAnimalInTotal)/this.numberOfDay)/100.0 + "\n");
+                writer.write("Average of average of live long for dead animals in simulation: " +
+                        Math.round((100.0*this.averageLiveLongForDeadAnimalInTotal)/(this.numberOfDay -
+                                this.dayNumberWhenFirstAnimalDead))/100.0 + "\n");
+                writer.write("Average of average of number of children per living animal in simulation: " +
+                        Math.round((100.0*this.averageNumberOfChildrenPerLivingAnimalInTotal)/this.numberOfDay)/100.0 + "\n");
+
+                writer.close();
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 }

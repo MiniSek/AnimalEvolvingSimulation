@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 
 public class ButtonsPanel extends JPanel implements ActionListener {
     private IMediate mediator;
-    private SimulationEngine engine;
 
     private JButton stopButton;
     private JButton startButton;
@@ -18,9 +17,8 @@ public class ButtonsPanel extends JPanel implements ActionListener {
     private JTextField delayTextField;
     private JLabel delayLabel;
 
-    public ButtonsPanel(IMediate mediator, SimulationEngine engine) {
+    public ButtonsPanel(IMediate mediator) {
         this.mediator = mediator;
-        this.engine = engine;
 
         this.setLayout(null);
 
@@ -83,10 +81,14 @@ public class ButtonsPanel extends JPanel implements ActionListener {
 
         if(e.getSource() == this.setDelayButton) {
             if(this.checkValidity()) {
-                this.engine.setDelay(Integer.parseInt(this.delayTextField.getText()));
+                this.mediator.notifyMediator(this, "set delay");
                 this.delayTextField.setText("");
             }
         }
+    }
+
+    public int getDelay() {
+        return Integer.parseInt(this.delayTextField.getText());
     }
 
     private boolean checkValidity() {

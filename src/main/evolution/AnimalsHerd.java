@@ -23,8 +23,8 @@ public class AnimalsHerd implements IAnimalsHerd{
         this.animalsAtPosition.remove(animal);
     }
 
-    public void removeAnimalsWithZeroEnergy() {
-        for(int i = this.sizeOfHerd()-1; i >= 0 && this.animalsAtPosition.get(i).getEnergy() == 0; i--) {
+    public void removeAnimalsWithSmallAmountOfEnergy(int animalMoveEnergy) {
+        for(int i = this.sizeOfHerd()-1; i >= 0 && this.animalsAtPosition.get(i).getEnergy() < animalMoveEnergy; i--) {
             this.map.animalWasDeleted(this.animalsAtPosition.get(i));
             this.removeFromHerd(this.animalsAtPosition.get(i));
         }
