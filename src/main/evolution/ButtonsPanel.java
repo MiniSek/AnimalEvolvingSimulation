@@ -66,15 +66,19 @@ public class ButtonsPanel extends JPanel implements ActionListener {
     }
 
     @Override public void actionPerformed(ActionEvent e) {
+        //stop simulation
         if(e.getSource() == this.stopButton)
             this.mediator.notifyMediator(this, "stop clicked");
 
+        //start simulation
         if(e.getSource() == this.startButton)
             this.mediator.notifyMediator(this, "start clicked");
 
+        //highlight animals with dominant genotype
         if(e.getSource() == this.highlightMostCommonGenesButton)
             this.mediator.notifyMediator(this, "highlight clicked");
 
+        //unselect selected animal
         if(e.getSource() == this.unselectAnimalButton) {
             this.mediator.notifyMediator(this, "unselect clicked");
         }

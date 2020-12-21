@@ -6,43 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="7f960795-f95d-49c2-8708-619a5cf0a046" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/19-12-2020_17-52-49.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/19-12-2020_17-55-58.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_14-33-41.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_15-11-30.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_15-22-22.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_15-57-12.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_16-07-56.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_18-04-22.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_18-05-50.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_18-07-29.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_18-10-08.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_18-12-29.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_18-15-07.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_18-26-18.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_18-26-31.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_18-28-10.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_19-09-05.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_19-46-04.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_21-54-41.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_21-58-46.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_22-12-16.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_22-14-35.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_22-42-07.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_22-42-41.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/20-12-2020_22-52-36.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/21-12-2020_11-55-07.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/21-12-2020_12-13-21.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/21-12-2020_12-46-37.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/21-12-2020_12-49-52.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/21-12-2020_12-52-09.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/21-12-2020_12-52-28.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/21-12-2020_13-06-39.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/21-12-2020_14_17_35.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/ala.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/SimulationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/SimulationEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/Statistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/Statistics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/World.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/21-12-2020_17_09_19.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/21-12-2020_17_10_49.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/21-12-2020_17_11_40.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/21-12-2020_17_12_00.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/labs/evolution/output_stats/21-12-2020_17_16_53.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/ButtonsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/ButtonsPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
