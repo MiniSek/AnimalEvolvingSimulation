@@ -26,21 +26,21 @@ public class FollowedAnimalStatsPanel extends JPanel implements IAnimalsBehaviou
         this.numberOfChildrenWhenAnimalPicked = 0;
 
         this.setLabels();
-        this.setVoidAnimalStats();
+        this.updateAnimalStatsToVoid();
 
         this.setLayout(null);
     }
 
-    public void animalPicked(Animal selectedAnimal) {
+    public void setSelectedAnimal(Animal selectedAnimal) {
         this.selectedAnimal = selectedAnimal;
 
         if(this.selectedAnimal == null)
-            this.setVoidAnimalStats();
+            this.updateAnimalStatsToVoid();
         else {
-            this.selectedAnimal.turnOnMarker();
+            this.selectedAnimal.turnOnMarker(); //marking animal after selection
 //            this.dayWhenAnimalPicked =; //is set outside
-            this.dayWhenAnimalDied = -1;
-            this.numberOfAnimalDescendants = -1;
+            this.dayWhenAnimalDied = -1; //-1 if animal is alive
+            this.numberOfAnimalDescendants = 0;
             this.numberOfChildrenWhenAnimalPicked = this.selectedAnimal.getNumberOfChildren();
             this.updateAnimalStats(false);
         }
@@ -112,6 +112,8 @@ public class FollowedAnimalStatsPanel extends JPanel implements IAnimalsBehaviou
         this.statisticsLabels[13].setSize(50, 50);
     }
 
+    //this.selectedAnimal != null is for SimulationWindow where this stats also are update and the class doesn't now about
+    //selected animal status
     public void updateAnimalStats(boolean afterDeath) {
         if(this.selectedAnimal != null) {
             if(afterDeath) {
@@ -129,23 +131,22 @@ public class FollowedAnimalStatsPanel extends JPanel implements IAnimalsBehaviou
 
             this.statisticsLabels[11].setText(String.valueOf(this.dayWhenAnimalPicked));
             this.statisticsLabels[12].setText(String.valueOf(this.selectedAnimal.getNumberOfChildren() - this.numberOfChildrenWhenAnimalPicked));
-            this.statisticsLabels[13].setText(String.valueOf(Math.max(0,this.numberOfAnimalDescendants)));
+            this.statisticsLabels[13].setText(String.valueOf(this.numberOfAnimalDescendants));
         }
     }
 
-    public void setVoidAnimalStats() {
+    public void updateAnimalStatsToVoid() {
         for(int i = 7; i < 14; i++)
             this.statisticsLabels[i].setText("-");
     }
 
-    @Override
-    public void animalCreated(Animal animal) {
+    //panel will be informed about animal creations or deaths
+    @Override public void animalCreated(Animal animal) {
         if(animal.marked())
             this.numberOfAnimalDescendants++;
     }
 
-    @Override
-    public void animalDied(Animal animal) {
+    @Override public void animalDied(Animal animal) {
         if(animal.equals(this.selectedAnimal)){
             this.mediator.notifyMediator(this, "selected animal died");
             this.updateAnimalStats(true);

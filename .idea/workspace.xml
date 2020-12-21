@@ -1,34 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="7f960795-f95d-49c2-8708-619a5cf0a046" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_21-54-41.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_21-58-46.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_22-12-16.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_22-14-35.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_22-42-07.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_22-42-41.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_22-52-36.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/evolution/DataValidator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/AbstractWorldMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/AbstractWorldMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/AbstractWorldMap.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/Animal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/AnimalsHerd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/AnimalsHerd.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/ButtonsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/ButtonsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/DataInputWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/DataInputWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/DataInputWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/ParametersInformWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/FollowedAnimalStatsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/FollowedAnimalStatsPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/Genotype.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/Genotype.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/IAnimalsHerd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/IAnimalsHerd.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/MapCoordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/MapCoordinates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/MapDirection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/MapDirection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/MoveDirection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/MapVisualizer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/RectangularBiomesMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/RectangularBiomesMap.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/RenderMapPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/RenderMapPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/SimulationEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/SimulationEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/SimulationWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/SimulationWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/evolution/Statistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/Statistics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/evolution/StatisticsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/StatisticsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/evolution/AnimalTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/evolution/MapDirectionTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/evolution/SimulationEngineTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/evolution/Vector2dTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/World.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/evolution/World.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/19-12-2020_17-52-49.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/19-12-2020_17-55-58.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_14-33-41.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_15-11-30.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_15-22-22.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_15-57-12.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_16-07-56.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_18-04-22.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_18-05-50.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_18-07-29.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_18-10-08.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_18-12-29.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_18-15-07.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_18-26-18.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_18-26-31.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_18-28-10.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_19-09-05.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_19-46-04.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_21-54-41.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_21-58-46.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_22-12-16.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_22-14-35.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_22-42-07.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_22-42-41.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/evolution/output_stats/20-12-2020_22-52-36.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +93,9 @@
       <recent name="C:\Users\Dominik\Desktop\obiektowe\labs\src\main\evolution\input_parameters" />
       <recent name="C:\Users\Dominik\Desktop\obiektowe\labs\src\main\evolution" />
       <recent name="C:\Users\Dominik\Desktop\obiektowe\labs\src\main" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="evolution" />
     </key>
   </component>
   <component name="RunManager" selected="Application.World">

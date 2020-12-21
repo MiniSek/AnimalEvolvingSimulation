@@ -79,9 +79,15 @@ public class ButtonsPanel extends JPanel implements ActionListener {
             this.mediator.notifyMediator(this, "unselect clicked");
         }
 
+        //accept delay value only if is right number
         if(e.getSource() == this.setDelayButton) {
-            if(this.checkValidity()) {
+            String isGood = DataValidator.validateData(this.delayTextField.getText());
+            if(isGood.equals("true")) {
                 this.mediator.notifyMediator(this, "set delay");
+                this.delayTextField.setText("");
+            }
+            else {
+                JOptionPane.showMessageDialog(this, isGood);
                 this.delayTextField.setText("");
             }
         }
@@ -89,16 +95,5 @@ public class ButtonsPanel extends JPanel implements ActionListener {
 
     public int getDelay() {
         return Integer.parseInt(this.delayTextField.getText());
-    }
-
-    private boolean checkValidity() {
-        String delayString = this.delayTextField.getText();
-        if(delayString.length() < 1 || delayString.charAt(0) < 49 || delayString.charAt(0) > 57)
-            return false;
-        for(int i = 1; i < delayString.length(); i++) {
-            if(delayString.charAt(i) < 48 || delayString.charAt(i) > 57)
-                return false;
-        }
-        return true;
     }
 }

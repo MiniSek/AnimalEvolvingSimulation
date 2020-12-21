@@ -39,27 +39,17 @@ public class Genotype {
         }
 
         //genes with indexes [0, firstIndex] are from this Genotype
-//        for(int i = 0; i <= firstIndex; i++)
-//            childGenotype.genes[i] = this.genes[i];
         System.arraycopy(this.genes, 0, childGenotype.genes, 0, firstIndex+1);
 
         //genes with indexes [firstIndex+1, secondIndex] are from this Genotype and genes with indexes [secondIndex+1, 31]
         //are from other Genotype
         //or vice versa
         if(generator.nextBoolean()) {
-//            for(int i = firstIndex + 1; i <= secondIndex; i++)
-//                childGenotype.genes[i] = this.genes[i];
             System.arraycopy(this.genes, firstIndex+1, childGenotype.genes, firstIndex+1, secondIndex - firstIndex);
-//            for(int i = secondIndex + 1; i < 32; i++)
-//                childGenotype.genes[i] = other.genes[i];
             System.arraycopy(other.genes, secondIndex+1, childGenotype.genes, secondIndex+1, 31 - secondIndex);
         }
         else {
-//            for(int i = firstIndex + 1; i <= secondIndex; i++)
-//                childGenotype.genes[i] = other.genes[i];
             System.arraycopy(other.genes, firstIndex+1, childGenotype.genes, firstIndex+1, secondIndex - firstIndex);
-//            for(int i = secondIndex + 1; i < 32; i++)
-//                childGenotype.genes[i] = this.genes[i];
             System.arraycopy(this.genes, secondIndex+1, childGenotype.genes, secondIndex+1, 31 - secondIndex);
         }
 
@@ -81,8 +71,11 @@ public class Genotype {
                 //missing gene cannot be added at position where is gene which is only one in genotype
                 while(numberOfEachGeneInChildGenotype[this.genes[possibleIndexToAddMissingGene]] <= 1)
                     possibleIndexToAddMissingGene = generator.nextInt(32);
+
+                //update number of each gene in genotype
                 numberOfEachGeneInChildGenotype[this.genes[possibleIndexToAddMissingGene]]--;
                 numberOfEachGeneInChildGenotype[i]++;
+
                 this.genes[possibleIndexToAddMissingGene] = i;
             }
     }

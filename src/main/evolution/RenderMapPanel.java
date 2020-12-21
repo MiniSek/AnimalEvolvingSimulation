@@ -35,6 +35,8 @@ public class RenderMapPanel extends JPanel implements MouseListener {
         this.columnsNumber = height;
         this.animalsStartEnergy = animalsStartEnergy;
 
+        //796 = 800 - 4; 4 pixels for boarders
+        //756 = 760 - 4; 4 pixels for boarders
         this.squareSide = Math.min(796/this.rowsNumber, 756/this.columnsNumber);
 
         this.panelWidth = this.squareSide * this.rowsNumber + 4;
@@ -139,6 +141,9 @@ public class RenderMapPanel extends JPanel implements MouseListener {
     @Override public void mouseEntered(MouseEvent e) {}
     @Override public void mouseExited(MouseEvent e) {}
 
+    //color for animal is selected from 20 colors
+    //every 0.1 energy which animals have at the start is another
+    //if animal energy > 2 * startEnergy then color is only one
     private Color getColor(Animal animal) {
         int energy = animal.getEnergy();
         for(int i = 0 ; i < 20; i++) {

@@ -3,6 +3,7 @@ package evolution;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileSystemAlreadyExistsException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -71,6 +72,7 @@ public class Statistics {
         }
     }
 
+
     public void updateStatistics(ArrayList<Animal> animals) {
         int energySum = 0;
         int childrenSum = 0;
@@ -122,7 +124,9 @@ public class Statistics {
             this.updateNumberOfEachGenotypeInTotal(animal);
     }
 
-   private void mostCommonGenotype(ArrayList<Animal> animalsSortedByGenotype) {
+    //method for setting most common genotype and number of animals with it
+    //ArrayList<animal> have to be sorted for this method
+    private void mostCommonGenotype(ArrayList<Animal> animalsSortedByGenotype) {
         String previous = "";
         int bestCount = 0;
         int count = 1;
@@ -156,8 +160,9 @@ public class Statistics {
             this.numberOfEachGenotypeInTotal.put(animal.getGenotype(), 1);
     }
 
-    public void saveStatsToFile() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
+    //stats are saved to file which name is data and time when simulation was closed
+    public void saveStatsToFile() throws FileSystemAlreadyExistsException{
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH_mm_ss");
         String filePath = "output_stats\\" + LocalDateTime.now().format(formatter) + ".txt";
         File myObj = new File(filePath);
         try {
@@ -190,7 +195,7 @@ public class Statistics {
 
                 writer.close();
             } else {
-                System.out.println("File already exists.");
+                throw new FileSystemAlreadyExistsException("can't save stats to file, file " + filePath + " already exist");
             }
         } catch(IOException e) {
             e.printStackTrace();

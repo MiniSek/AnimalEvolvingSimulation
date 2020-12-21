@@ -23,19 +23,19 @@ public class AnimalsHerd implements IAnimalsHerd{
         this.animalsAtPosition.remove(animal);
     }
 
-    public void removeAnimalsWithSmallAmountOfEnergy(int animalMoveEnergy) {
-        for(int i = this.sizeOfHerd()-1; i >= 0 && this.animalsAtPosition.get(i).getEnergy() < animalMoveEnergy; i--) {
-            this.map.animalWasDeleted(this.animalsAtPosition.get(i));
+    //herd informs map about deleting animal
+    public void removeAnimalsWithZeroAndSubZeroEnergy() {
+        for(int i = this.sizeOfHerd()-1; i >= 0 && this.animalsAtPosition.get(i).getEnergy() <= 0; i--) {
+            this.map.animalWillBeDeleted(this.animalsAtPosition.get(i));
             this.removeFromHerd(this.animalsAtPosition.get(i));
         }
     }
 
     public void feedInHerd(int grassEnergy) {
-        int numberOfStrongestAnimals = 0;
-        while(numberOfStrongestAnimals < this.sizeOfHerd() && this.animalsAtPosition.get(numberOfStrongestAnimals).getEnergy() == this.getAlphaOfHerd().getEnergy())
-            numberOfStrongestAnimals++;
-        int grassPerAnimal = grassEnergy/numberOfStrongestAnimals;
-        for(int indexOfAnimal = 0; indexOfAnimal < numberOfStrongestAnimals; indexOfAnimal++)
+        int numberOfStrongestAnimal = this.countStrongest();
+
+        int grassPerAnimal = grassEnergy/numberOfStrongestAnimal;
+        for(int indexOfAnimal = 0; indexOfAnimal < numberOfStrongestAnimal; indexOfAnimal++)
             this.animalsAtPosition.get(indexOfAnimal).eatGrass(grassPerAnimal);
     }
 
@@ -47,28 +47,40 @@ public class AnimalsHerd implements IAnimalsHerd{
     private int[] drawTwoRandomStrongestAnimals() {
         Random generator = new Random();
         int[] indexesOfParents = new int[2];
-        int numberOfStrongestAnimals = 0;
-        while(numberOfStrongestAnimals < this.sizeOfHerd() && this.animalsAtPosition.get(numberOfStrongestAnimals).getEnergy() == this.getAlphaOfHerd().getEnergy())
-            numberOfStrongestAnimals++;
+        int numberOfStrongestAnimals = this.countStrongest();
+
         if(numberOfStrongestAnimals > 2) {
             indexesOfParents[0] = generator.nextInt(numberOfStrongestAnimals);
             indexesOfParents[1] = generator.nextInt(numberOfStrongestAnimals);
-            while (indexesOfParents[0] == indexesOfParents[1])
+            while(indexesOfParents[0] == indexesOfParents[1])
                 indexesOfParents[1] = generator.nextInt(numberOfStrongestAnimals);
         }
         else {
-            indexesOfParents[0]=0;
-            indexesOfParents[1]=1;
+            indexesOfParents[0]=generator.nextInt(2); //parents should always be choose randomly; its for genes inheritance
+            if(indexesOfParents[0] == 0)
+                indexesOfParents[1]=1;
+            else
+                indexesOfParents[1]=0;
         }
         return indexesOfParents;
     }
 
+    private int countStrongest() {
+        int numberOfStrongestAnimals = 0;
+        while(numberOfStrongestAnimals < this.sizeOfHerd() &&
+                this.animalsAtPosition.get(numberOfStrongestAnimals).getEnergy() == this.getAlphaOfHerd().getEnergy())
+            numberOfStrongestAnimals++;
+        return numberOfStrongestAnimals;
+    }
+
+    //first in the list or null
     public Animal getAlphaOfHerd() {
         if(this.sizeOfHerd() > 0)
             return this.animalsAtPosition.get(0);
         return null;
     }
 
+    //second in the list or null
     public Animal getBetaOfHerd() {
         if(this.sizeOfHerd() > 1)
             return this.animalsAtPosition.get(1);

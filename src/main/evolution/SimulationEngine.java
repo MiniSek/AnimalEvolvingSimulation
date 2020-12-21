@@ -3,6 +3,7 @@ package evolution;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.FileSystemAlreadyExistsException;
 import java.util.*;
 
 public class SimulationEngine implements ActionListener, IAnimalsBehaviourOnMapObserver {
@@ -41,7 +42,9 @@ public class SimulationEngine implements ActionListener, IAnimalsBehaviourOnMapO
     }
 
     @Override public void actionPerformed(ActionEvent e) {
-        this.map.deleteAnimalsWithSmallAmountOfEnergy(this.animalMoveEnergy);
+        //if animal has not enough energy is add to animals to delete array and after checking all animals animals from
+        // this list are deleted
+        this.map.deleteAnimalsWithZeroAndSubZeroEnergy();
         this.deleteDeadAnimals();
 
         for (Animal animal : this.animals) {
@@ -59,6 +62,7 @@ public class SimulationEngine implements ActionListener, IAnimalsBehaviourOnMapO
 
         this.simulationWindow.update();
 
+        //simulation can be stopped only after the whole day; it's for simplicity
         if(this.stopTime) {
             this.timer.stop();
             this.stopTime = false;
@@ -100,7 +104,12 @@ public class SimulationEngine implements ActionListener, IAnimalsBehaviourOnMapO
     }
 
     public void saveStatsToFile() {
-        this.map.statistics.saveStatsToFile();
+        try {
+            this.map.statistics.saveStatsToFile();
+        }
+        catch(FileSystemAlreadyExistsException e) {
+            e.printStackTrace();
+        }
     }
 
     private void deleteDeadAnimals() {

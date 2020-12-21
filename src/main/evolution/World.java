@@ -24,10 +24,9 @@ public class World {
                 String[] data = {(String)parameters.get("width"), (String)parameters.get("height"), (String)parameters.get("jungle ratio"),
                         (String)parameters.get("number of animals at start"), (String)parameters.get("animals start energy"),
                         (String)parameters.get("animals move energy"), (String)parameters.get("grass energy")};
-
-                new DataInputWindow(data[0], data[1], data[2], data[3], data[4], data[5], data[6]);
+                if(DataValidator.validateInputData(data))
+                    new ParametersInformWindow(data[0], data[1], data[2], data[3], data[4], data[5], data[6]);
             }
-
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         } catch(IOException e) {

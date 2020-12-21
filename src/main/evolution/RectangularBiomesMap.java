@@ -2,7 +2,7 @@ package evolution;
 
 import java.util.*;
 
-public class RectangularBiomesMap extends AbstractWorldMap{
+public class RectangularBiomesMap implements IWorldMap, IAnimalPositionChangedObserver{
     private final ArrayList<IAnimalsBehaviourOnMapObserver> observers = new ArrayList<>();
 
     private final MapCoordinates coordinates;
@@ -16,33 +16,35 @@ public class RectangularBiomesMap extends AbstractWorldMap{
 
 
     public RectangularBiomesMap(int width, int height, double jungleRatio, int numberOfAnimalsAtStart) {
-        super();
-
         this.coordinates = new MapCoordinates(width, height, jungleRatio);
         this.statistics = new Statistics(numberOfAnimalsAtStart);
-
-        this.leftLowerCornerToDraw = this.coordinates.leftLowerCorner;
-        this.rightUpperCornerToDraw = this.coordinates.rightUpperCorner;
     }
 
-    public void updateDrawFrame() {
-        //it's unnecessary to update this, in constructor draw frame is set
+    public boolean canMoveTo(Vector2d position) {
+        return true;
     }
 
-    //animal is added always
-    @Override public void place(Animal animal) {
+    public boolean isOccupied(Vector2d position) {
+        return this.objectAt(position) != null;
+    }
+
+    //animal is always added
+    public void place(Animal animal) {
         IAnimalsHerd herdAtPosition;
-        if(this.animals.get(animal.getPosition()) == null)
+        if(this.animals.get(animal.getPosition()) == null)  //if at that position is no herd create new
             herdAtPosition = new AnimalsHerd(this);
         else
             herdAtPosition = this.animals.get(animal.getPosition());
+
         herdAtPosition.addToHerd(animal);
+
         this.animals.put(animal.getPosition(), herdAtPosition);
         animal.addObserver(this);
         this.animalCreatedInformObservers(animal);
     }
 
-    @Override public Object objectAt(Vector2d position) {
+    //alpha animal in herd, grass or null if position is empty
+    public Object objectAt(Vector2d position) {
         IAnimalsHerd herdAtPosition = this.animals.get(position);
         if(herdAtPosition == null) {
             return this.grasses.get(position);
@@ -72,7 +74,8 @@ public class RectangularBiomesMap extends AbstractWorldMap{
         return false;
     }
 
-    //what if almost whole jungle is filled?
+    //numberOdHerds is counted to check whether there is place to plant grass
+    //number of empty places in jungle has to be lower than number of all places in jungle
     public void growGrasses() {
         int numberOfHerdsInJungle = 0;
         for(Vector2d position : this.animals.keySet())
@@ -83,6 +86,7 @@ public class RectangularBiomesMap extends AbstractWorldMap{
             while(!this.placeGrass(this.coordinates.drawPositionInJungle())) {}
             this.statistics.numberOfGrassesInJungle += 1;
         }
+        //this.animal.size() - numberOfHerdsInJungle is the number of occupied places in savanna
         if(this.statistics.numberOfGrassesInSavanna + this.animals.size() - numberOfHerdsInJungle <
                 this.coordinates.width * this.coordinates.height - this.coordinates.jungleWidth * this.coordinates.jungleHeight) {
             while(!this.placeGrass(this.coordinates.drawPositionInSavanna())) {}
@@ -94,6 +98,7 @@ public class RectangularBiomesMap extends AbstractWorldMap{
         for(Vector2d position : this.animals.keySet()) {
             if(this.grasses.get(position) != null) {
                 this.animals.get(position).feedInHerd(grassEnergy);
+
                 this.grasses.remove(position);
                 if(this.coordinates.isPositionInJungle(position))
                     this.statistics.numberOfGrassesInJungle -= 1;
@@ -103,6 +108,7 @@ public class RectangularBiomesMap extends AbstractWorldMap{
         }
     }
 
+    //animals to add are gathered in animalsToAdd array and after all reproductions are added
     public void animalsReproduce(int animalStartEnergy) {
         for(Vector2d position : this.animals.keySet()) {
             if(this.animals.get(position).sizeOfHerd() > 1 &&
@@ -121,14 +127,16 @@ public class RectangularBiomesMap extends AbstractWorldMap{
     public void animalToAddToMap(Animal animal) {
         this.animalsToAdd.add(animal);
     }
-    
+
     public Vector2d findPlaceForChildAnimal(Vector2d parentsPosition) {
         Random generator = new Random();
         ArrayList<Vector2d> possiblePositionForChild = new ArrayList<>();
 
+        //check every position around the parents
+        //if is empty add to potencial positions
         for(MapDirection direction : MapDirection.values()) {
             Vector2d possiblePosition = this.coordinates.setCorrespondingPositionIfCurrentIsOutsideOfMap(parentsPosition.add(direction.toUnitVector()));
-            if (!this.isOccupied(possiblePosition))
+            if(!this.isOccupied(possiblePosition))
                 possiblePositionForChild.add(possiblePosition);
         }
 
@@ -140,9 +148,9 @@ public class RectangularBiomesMap extends AbstractWorldMap{
     }
 
     //method which is called by animal to inform map about animal death
-    public void deleteAnimalsWithSmallAmountOfEnergy(int animalsMoveEnergy) {
+    public void deleteAnimalsWithZeroAndSubZeroEnergy() {
         for(Vector2d position : this.animals.keySet()) {
-            this.animals.get(position).removeAnimalsWithSmallAmountOfEnergy(animalsMoveEnergy);
+            this.animals.get(position).removeAnimalsWithZeroAndSubZeroEnergy();
             if(this.animals.get(position).sizeOfHerd() == 0)
                 this.positionOfHerdsToDelete.add(position);
         }
@@ -151,7 +159,7 @@ public class RectangularBiomesMap extends AbstractWorldMap{
         this.positionOfHerdsToDelete.clear();
     }
 
-    public void animalWasDeleted(Animal animal) {
+    public void animalWillBeDeleted(Animal animal) {
         this.statistics.numberOfDeadAnimals += 1;
         this.statistics.numberOfAnimals -= 1;
         this.statistics.numberOfLivedDaysInSummaryForDeadAnimals += animal.getLivedDays();

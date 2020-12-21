@@ -67,30 +67,34 @@ public class SimulationWindow extends JPanel implements IMediate, WindowListener
         this.followedAnimalStatsPanel.updateAnimalStats(false);
     }
 
+    //SimulationWindow is mediator for renderMapPanel, buttonsPanel, followedAnimalStatsPanel; it's to simplify relations
+    //between this objects
     public void notifyMediator(Object sender, String event) {
         if(sender instanceof ButtonsPanel) {
             if(event.equals("stop clicked")) {
                 this.engine.stopTimer();
             }
             else if(event.equals("start clicked")) {
+                //highlighted animals are visible only when simulation is stopped
                 this.renderMapPanel.hideAnimalsToHighlight();
                 this.engine.run();
             }
              else if(event.equals("highlight clicked")) {
-                    if(this.engine.isTimerStopped()) {
-                    this.renderMapPanel.hideSelectedAnimal();
-                    this.renderMapPanel.showAnimalsToHighlight();
+                 if(this.engine.isTimerStopped()) {
+                     this.renderMapPanel.hideSelectedAnimal();
+                     this.renderMapPanel.showAnimalsToHighlight();
 
-                    this.renderMapPanel.setAnimalsToHighlight(this.engine.getAnimalsToHighlight());
-                    this.followedAnimalStatsPanel.animalPicked(null);
-                    this.engine.turnOffMarkers(); //turnOff always after unselecting animal (when selected markers are turned off)
+                     this.renderMapPanel.setAnimalsToHighlight(this.engine.getAnimalsToHighlight());
+                     this.followedAnimalStatsPanel.setSelectedAnimal(null);
+
+                     //turnOff always after unselecting animal (when selected markers are turned off)
+                     this.engine.turnOffMarkers();
                      this.renderMapPanel.repaint();
                  }
              }
              else if(event.equals("unselect clicked")) {
                  this.renderMapPanel.hideSelectedAnimal();
-
-                 this.followedAnimalStatsPanel.animalPicked(null);
+                 this.followedAnimalStatsPanel.setSelectedAnimal(null);
                  this.engine.turnOffMarkers();
 
                  this.renderMapPanel.repaint();
@@ -106,7 +110,7 @@ public class SimulationWindow extends JPanel implements IMediate, WindowListener
 
                 this.engine.turnOffMarkers();
                 this.followedAnimalStatsPanel.setDayWhenAnimalPicked(this.engine.getDay());
-                this.followedAnimalStatsPanel.animalPicked(this.renderMapPanel.getSelectedAnimal());
+                this.followedAnimalStatsPanel.setSelectedAnimal(this.renderMapPanel.getSelectedAnimal());
             }
         }
         else if(sender instanceof FollowedAnimalStatsPanel) {

@@ -8,7 +8,7 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
     private int livedDays;
     private int numberOfChildren;
     private final Genotype genotype;
-    private boolean marker;
+    private boolean markerForNumberOfDescendants;
 
     private MapDirection direction;
     private final IWorldMap map;
@@ -21,7 +21,7 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
         this.energy = animalStartEnergy;
         this.livedDays = 0;
         this.numberOfChildren = 0;
-        this.marker = false;
+        this.markerForNumberOfDescendants = false;
         this.genotype = genotype;
         this.genotype.sortGenes();
         this.genotype.rewriteGenesToString();
@@ -38,26 +38,7 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
 
     //it's not needed but can stay
     public String toString() {
-        switch(this.direction) {
-            case NORTH:
-                return "8";
-            case NORTHEAST:
-                return "9";
-            case EAST:
-                return "6";
-            case SOUTHEAST:
-                return "3";
-            case SOUTH:
-                return "2";
-            case SOUTHWEST:
-                return "1";
-            case WEST:
-                return "4";
-            case NORTHWEST:
-                return "7";
-            default:
-                return null;
-        }
+        return "a";
     }
 
     public int getEnergy() {
@@ -72,17 +53,19 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
         return this.numberOfChildren;
     }
 
+
     public void turnOnMarker() {
-        this.marker = true;
+        this.markerForNumberOfDescendants = true;
     }
 
     public void turnOffMarker() {
-        this.marker = false;
+        this.markerForNumberOfDescendants = false;
     }
 
     public boolean marked() {
-        return this.marker;
+        return this.markerForNumberOfDescendants;
     }
+
 
     public void eatGrass(int energyFromEatenGrass) {
         this.energy += energyFromEatenGrass;
@@ -95,6 +78,7 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
     }
 
     //for animal map is endless so map should be careful and update location of animal if it is abroad
+    //when animal moves it loses energy also and add one day to its age
     public void move(int animalMoveEnergy) {
         Vector2d oldLocation = this.location;
         this.location = this.location.add(this.direction.toUnitVector());
@@ -110,15 +94,24 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
         Vector2d positionToPlaceNewAnimal = this.map.findPlaceForChildAnimal(this.location);
 
         Animal childAnimal = new Animal(this.map, childDirection, positionToPlaceNewAnimal,
-                this.giveEnergyToChildAnimal() + other.giveEnergyToChildAnimal(), this.genotype.inheritGenes(other.genotype));
-        if(this.marker || other.marker)
+                this.giveEnergyToChildAnimal() + other.giveEnergyToChildAnimal(),
+                this.genotype.inheritGenes(other.genotype));
+
+        this.increaseNumberOfChildren();
+        other.increaseNumberOfChildren();
+
+        //if any of parents is marked child should also be; is counted then as a descendant
+        if(this.markerForNumberOfDescendants || other.markerForNumberOfDescendants)
             childAnimal.turnOnMarker();
+
         this.map.animalToAddToMap(childAnimal);
     }
 
-    private int giveEnergyToChildAnimal() {
+    public void increaseNumberOfChildren() {
         this.numberOfChildren += 1;
+    }
 
+    private int giveEnergyToChildAnimal() {
         int energyForChildAnimal = this.energy/4;
         this.energy -= energyForChildAnimal;
         return energyForChildAnimal;
