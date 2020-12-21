@@ -11,7 +11,6 @@ import java.io.IOException;
 
 public class World {
     public static void main(String[] args) {
-
         JSONParser jsonParser = new JSONParser();
 
         try(FileReader reader = new FileReader("input_parameters\\parameters.json")) {

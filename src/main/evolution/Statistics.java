@@ -144,11 +144,8 @@ public class Statistics {
             previous = animal.getGenotype();
         }
 
-        //change most common genotype only if is not as numerous as current one
-        if(bestCount != this.numberOfMostCommonGenotype) {
-            this.mostCommonGenotype = bestString;
-            this.numberOfMostCommonGenotype = bestCount;
-        }
+        this.mostCommonGenotype = bestString;
+        this.numberOfMostCommonGenotype = bestCount;
     }
 
     private void updateNumberOfEachGenotypeInTotal(Animal animal) {

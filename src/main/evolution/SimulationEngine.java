@@ -34,7 +34,7 @@ public class SimulationEngine implements ActionListener, IAnimalsBehaviourOnMapO
 
         this.distributeAnimals(width, height, numberOfAnimalsAtStart, animalStartEnergy);
 
-        this.timer = new Timer(100, this);
+        this.timer = new Timer(500, this);
         this.stopTime = false;
 
         this.map.statistics.updateStatisticsAtStart(this.animals, animalStartEnergy);
