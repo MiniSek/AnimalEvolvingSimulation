@@ -192,7 +192,7 @@ public class Statistics {
 
                 writer.close();
             } else {
-                throw new FileSystemAlreadyExistsException("can't save stats to file, file " + filePath + " already exist");
+                throw new FileSystemAlreadyExistsException("can't save stats to file, file " + filePath + " already exist");    // czy to na pewno właściwy typ wyjątku?
             }
         } catch(IOException e) {
             e.printStackTrace();

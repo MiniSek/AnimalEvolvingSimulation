@@ -1,4 +1,4 @@
-package evolution;
+package evolution;  // GUI lepiej trzymać osobno
 
 import javax.swing.*;
 import java.awt.*;

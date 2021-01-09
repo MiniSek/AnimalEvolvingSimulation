@@ -4,24 +4,24 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Genotype {
-    public byte[] genes;
+    public byte[] genes;    // public?
     public String genesString;
 
     public Genotype(){
         this.genes = new byte[32];
         this.genesString = "";
-    }
+    }   // new Genotype() - dostaję genotyp, który jest niepoprawny
 
     public void sortGenes() {
         Arrays.sort(this.genes);
     }
 
     public byte drawGene() {
-        Random generator = new Random();
+        Random generator = new Random();    // nowy obiekt co wywołanie?
         return this.genes[generator.nextInt(32)];
     }
 
-    public Genotype inheritGenes(Genotype other) {
+    public Genotype inheritGenes(Genotype other) {  // jak rozumieć zapis gene1.inheritGenes(gene2)?
         Genotype childGenotype = new Genotype();
         Random generator = new Random();
 
@@ -82,6 +82,6 @@ public class Genotype {
 
     public void rewriteGenesToString() {
         for(int i = 0; i < 32; i++)
-            this.genesString += String.valueOf(this.genes[i]);
-    }
+            this.genesString += String.valueOf(this.genes[i]);  // StringBuilder
+    }   // co się stanie, jak wywołam tę metodę kilka razy?
 }

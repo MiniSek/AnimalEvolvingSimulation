@@ -3,7 +3,7 @@ package evolution;
 import java.util.Random;
 
 public class MapCoordinates {
-    public int width;
+    public int width;   // public?
     public int height;
     public int jungleWidth;
     public int jungleHeight;

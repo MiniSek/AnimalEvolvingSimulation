@@ -47,7 +47,7 @@ public class Animal extends AbstractWorldMapElement implements Comparable<Animal
 
     public int getLivedDays() { return this.livedDays; }
 
-    public String getGenotype() { return this.genotype.genesString; }
+    public String getGenotype() { return this.genotype.genesString; }   // ta metoda właściwie nie zwraca genotypu
 
     public int getNumberOfChildren() {
         return this.numberOfChildren;
